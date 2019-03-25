@@ -10,5 +10,5 @@ function welcomemessage(): void {
 
 function outputusername(person2: string): void {
   document.getElementById("username").innerHTML = "Hello " + person2 + " how are you today nice to meet you"; 
-  console.log("Hello " + person2 + " how are you today nice to meet you")
+  console.log("Hello " + person2 + " how are you today nice to meet you");
 }

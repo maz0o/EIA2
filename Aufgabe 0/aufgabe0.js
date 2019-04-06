@@ -1,5 +1,5 @@
 function welcomemessage() {
-    var person = prompt("Please enter your name");
+    let person = prompt("Please enter your name");
     if (person == null) {
         console.log("User canceled input");
     }

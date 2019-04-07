@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", init)
 function init(): void {
     let notify: string = prompt("How many cards would you like?");
     let numberOfCards: number = parseInt(notify);
-    if (Number.isNaN(numberOfCards) || numberOfCards < 0 || numberOfCards > deck.length) {
+    if (Number.isNaN(numberOfCards) || numberOfCards < 1 || numberOfCards > deck.length) {
         init();
     }
     else {

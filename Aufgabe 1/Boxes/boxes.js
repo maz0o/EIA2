@@ -29,6 +29,10 @@ var Boxes;
     function placeDiv(_color, _x, _y, _width, _height) {
         let div = document.createElement("div");
         document.body.appendChild(div);
+        //Diese Art der CSS Zuweisung ist nicht schön und sollte vermieden werden.
+        //Eine css Datei anzulegen ist deutlich besser aber in diesem Fall nicht optimal,
+        //da jedes Objekt einige individuelle Attribute hat.
+        //Was sich gruppieren lässt, sollte stattdessen als css Klasse angelegt werden.
         let s = div.style;
         s.border = "thin solid black";
         s.position = "absolute";

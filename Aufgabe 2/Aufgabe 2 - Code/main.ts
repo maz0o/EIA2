@@ -42,6 +42,7 @@ function init(): void {
 
 }
 
+
 function displayCard(): void {
     for (let i: number = 0; i < hand.length; i++) {
 

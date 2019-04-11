@@ -15,7 +15,7 @@ namespace Aufgabe3 {
 
     let hand: Card[] = [];
 
-    let stack: Card = {value : null, color : null};
+    let stack: Card = { value: null, color: null };
 
     document.addEventListener("DOMContentLoaded", init);
 
@@ -36,7 +36,7 @@ namespace Aufgabe3 {
 
     function init(): void {
         document.getElementById("deck").addEventListener("click", addToHand);
-        document.addEventListener(blablablaevent, spaceAddToHand);
+        /*document.addEventListener(spaceAddToHand);*/
         document.getElementById("Handkarten").addEventListener("click", playCard);
         let notify: string = prompt("How many cards would you like?");
         let numberOfCards: number = parseInt(notify);
@@ -48,6 +48,8 @@ namespace Aufgabe3 {
                 addToHand();
             }
         }
+
+/*blablablaevent,*/ 
 
     }
 
@@ -75,9 +77,9 @@ namespace Aufgabe3 {
         }
     }
 
-    function spaceAddToHand(_event:KeyboardEvent):void{
-    
-    }
+    /*    function spaceAddToHand(_event:KeyboardEvent):void{
+        
+        }*/
 
     function playCard(_event: Event): void {
         let div: HTMLDivElement = <HTMLDivElement>_event.target;
@@ -89,8 +91,8 @@ namespace Aufgabe3 {
         displayCard();
 
         if (document.getElementById("stack").firstChild) {
-        console.log(document.getElementById("stack"));
-        document.getElementById("stack").removeChild(document.getElementById("stack").firstChild);
+            console.log(document.getElementById("stack"));
+            document.getElementById("stack").removeChild(document.getElementById("stack").firstChild);
         }
         let card: HTMLDivElement = document.createElement("div");
         card.innerHTML = stack.color;

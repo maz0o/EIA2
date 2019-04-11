@@ -28,7 +28,7 @@ var Aufgabe3;
     }
     function init() {
         document.getElementById("deck").addEventListener("click", addToHand);
-        document.addEventListener(blablablaevent, spaceAddToHand);
+        /*document.addEventListener(spaceAddToHand);*/
         document.getElementById("Handkarten").addEventListener("click", playCard);
         let notify = prompt("How many cards would you like?");
         let numberOfCards = parseInt(notify);
@@ -40,6 +40,7 @@ var Aufgabe3;
                 addToHand();
             }
         }
+        /*blablablaevent,*/
     }
     function displayCard() {
         let div = document.getElementById("Handkarten");
@@ -70,8 +71,9 @@ var Aufgabe3;
             }
         }
     }
-    function spaceAddToHand(_event) {
-    }
+    /*    function spaceAddToHand(_event:KeyboardEvent):void{
+        
+        }*/
     function playCard(_event) {
         let div = _event.target;
         console.log(stack);

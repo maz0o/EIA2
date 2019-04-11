@@ -15,6 +15,46 @@ namespace Aufgabe3 {
 
     let hand: Card[] = [];
 
+
+    document.addEventListener("keydown", checkKey);
+
+    function checkKey(_event: KeyboardEvent): void {
+        if (_event.key == " ") {
+            addToHand();
+        }
+    }
+
+
+
+    function sortHand(): void {
+        console.log("hallo");
+        hand.sort(compareValue);
+        hand.sort(compareColor);
+        displayCard();
+    }
+
+
+    function compareValue(_a: Card, _b: Card): number {
+        if (_a.value < _b.value) {
+            return -1;
+        }
+        if (_a.value > _b.value) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function compareColor(_a: Card, _b: Card): number {
+        if (_a.color < _b.color) {
+            return -1;
+        }
+        if (_a.color > _b.color) {
+            return 1;
+        }
+        return 0;
+    }
+
+
     let stack: Card = { value: null, color: null };
 
     document.addEventListener("DOMContentLoaded", init);
@@ -28,7 +68,6 @@ namespace Aufgabe3 {
             let deckElement: HTMLDivElement = <HTMLDivElement>document.getElementById("deck");
             deckElement.innerHTML = deck.length.toString();
             deckElement.innerHTML += " cards left";
-            console.log("test");
             displayCard();
         }
         else { console.log("No cards left to draw...somebody's not counting...."); }
@@ -36,6 +75,7 @@ namespace Aufgabe3 {
 
     function init(): void {
         document.getElementById("deck").addEventListener("click", addToHand);
+        document.getElementById("sortBtn").addEventListener("click", sortHand);
         /*document.addEventListener(spaceAddToHand);*/
         document.getElementById("Handkarten").addEventListener("click", playCard);
         let notify: string = prompt("How many cards would you like?");
@@ -49,7 +89,7 @@ namespace Aufgabe3 {
             }
         }
 
-/*blablablaevent,*/ 
+        /*blablablaevent,*/
 
     }
 
@@ -83,28 +123,34 @@ namespace Aufgabe3 {
 
     function playCard(_event: Event): void {
         let div: HTMLDivElement = <HTMLDivElement>_event.target;
-        console.log(stack);
-        stack = hand[parseInt(div.getAttribute("id"))];
-        console.log(stack);
-        hand.splice(parseInt(div.getAttribute("id")), 1);
-        console.log(hand);
-        displayCard();
+        if (div.getAttribute("id") != "Handkarten") {
+            console.log(stack);
+            stack = hand[parseInt(div.getAttribute("id"))];
+            console.log(stack);
+            hand.splice(parseInt(div.getAttribute("id")), 1);
+            console.log(hand);
+            displayCard();
 
-        if (document.getElementById("stack").firstChild) {
-            console.log(document.getElementById("stack"));
-            document.getElementById("stack").removeChild(document.getElementById("stack").firstChild);
-        }
-        let card: HTMLDivElement = document.createElement("div");
-        card.innerHTML = stack.color;
-        card.innerHTML += " ";
-        card.innerHTML += stack.value;
-        document.getElementById("stack").appendChild(card);
-        card.classList.add("kartenform");
-        switch (stack.color) {
-            case "Karo": card.classList.add("roteKarte"); break;
-            case "Pik": card.classList.add("schwarzeKarte"); break;
-            case "Kreuz": card.classList.add("schwarzeKarte"); break;
-            case "Herz": card.classList.add("roteKarte"); break;
+            if (document.getElementById("stack").firstChild) {
+                console.log(document.getElementById("stack"));
+                document.getElementById("stack").removeChild(document.getElementById("stack").firstChild);
+            }
+            let card: HTMLDivElement = document.createElement("div");
+            card.innerHTML = stack.color;
+            card.innerHTML += " ";
+            card.innerHTML += stack.value;
+            document.getElementById("stack").appendChild(card);
+            card.classList.add("kartenform");
+            switch (stack.color) {
+                case "Karo": card.classList.add("roteKarte"); break;
+                case "Pik": card.classList.add("schwarzeKarte"); break;
+                case "Kreuz": card.classList.add("schwarzeKarte"); break;
+                case "Herz": card.classList.add("roteKarte"); break;
+            }
+
+
+
+
         }
 
         /*    stack.innerHTML = (parseInt(div.getAttribute("id")),);

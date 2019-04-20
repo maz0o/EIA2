@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+
+	<title>L04_FormElements</title>
+	<link rel="stylesheet" href="STYLES/main.css" type="text/css" media="screen" />
+	<script src="icedealer.js" type="text/javascript" charset="utf-8"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+	<link rel="icon" href="IMG/icon.png">
+</head>
+
+<body>
+	<header>
+		<div id="headerLogo"> <img src="IMG/header_logo.png" alt="Logo / Header">
+		</div>
+	</header>
+
+	<main>
+
+		<div class="flex-container">
+			<div class="flex-item">
+				<fieldset>
+					<h2> CRISPY CONE OR CLASSY CUP? IT´S UP TO YOU BRUH!</h2>
+					<select name="Selectbox" id="Selectbox">
+						<label> "choose" </label>
+						<option price="0.20" name="Selectbox" value="0" itemName="cone">Choose</option>
+						<option price="0.20" name="Selectbox" value="0" itemName="cone">cone</option>
+						<option price="0.50" name="Selectbox" value="0" itemName="cup">cup</option>
+					</select>
+				</fieldset>
+			</div>
+
+			<div class="flex-item">
+				<fieldset>
+
+					<h2>I CHOOSE YOU....</h2>
+					<span><input type="number" name="Stepper" step="1" min="0" max="10" value="0" price="1.5"
+							itemName="Matcha" /> Matcha</span>
+
+					<span><input type="number" name="Stepper" step="1" min="0" max="10" value="0" price="1.5"
+							itemName="Thunder" />Thunder</span>
+
+					<span><input type="number" name="Stepper" step="1" min="0" max="10" value="0" price="1.5"
+							itemName="Melon" /> Melon</span>
+					<span><input type="number" name="Stepper" step="1" min="0" max="10" value="0" price="1.5"
+							itemName="Fudge" /> Fudge</span>
+
+					<span><input type="number" name="Stepper" step="1" min="0" max="10" value="0" price="1.5"
+							itemName="Granny´s Apple Pie" /> Granny´s Apple Pie </span>
+
+					<span><input type="number" name="Stepper" step="1" min="0" max="10" value="0" price="1.5"
+							itemName="Cinnamon Heaven" /> Cinnamon Heaven </span>
+				</fieldset>
+			</div>
+
+			<div class="flex-item">
+				<fieldset>
+
+					<h2> EXTRA GOODIES FOR YOUR ICECREAM </h2>
+					<span><input type="checkbox" name="Checkbox" value="0.70" itemName="Smarties" id="check1" />
+						<label for="check1">Smarties</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="0.50" itemName="Cottoncandy" id="check2" />
+						<label for="check2">Cottoncandy</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="1.00" itemName="Brownies" id="check3" />
+						<label for="check3">Brownies</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="1.00" itemName="Cookiedough" id="check4" />
+						<label for="check4">Cookie Dough</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="0.50" itemName="Caramel" id="check5" />
+						<label for="check5">Caramel</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="0.20" itemName="Sprinkles" id="check6" />
+						<label for="check6">Sprinkles</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="0.60" itemName="Peanut Butter Cups"
+							id="check7" />
+						<label for="check7">Peanut Butter Cups</label></span>
+
+					<span><input type="checkbox" name="Checkbox" value="0.60" itemName="Chocolate Pretzels"
+							id="check8" />
+						<label for="check8">Chocolate Pretzels</label></span>
+				</fieldset>
+			</div>
+
+			<div class="flex-item2">
+				<form>
+					<h2>YOUR ADDRESS</h2>
+					<fieldset>
+						<label for="adress">lastname: </label> <br>
+						<input id="adress" required> <br>
+						<label for="firstname">firstname: </label> <br>
+						<input id="adress" required> <br>
+						<label for="street">street</label> <br>
+						<input type="text" id="street" required> <br>
+						<label for="aprtNumber">apartment number</label> <br>
+						<input type="number" id="aprtNumber" required> <br>
+						<label for="city">city</label> <br>
+						<input type="text" id="city" required> <br>
+						<label for="zipCode">Postalcode</label> <br>
+						<input type="number" id="zipCode" required> <br>
+					</fieldset>
+
+					<button>check your order bruh</button>
+				</form>
+			</div>
+
+			<div class="flex-item3" id="bestellung">
+				<h2>Your order will be listed here</h2>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

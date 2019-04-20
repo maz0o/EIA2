@@ -28,7 +28,7 @@ img {
     background-color: rgba(0, 0, 0, 0.5);
     height: 50%;
     margin: 1.5%;
-    width: 30%;
+    width: auto;
 }
 
 .flex-item3 {

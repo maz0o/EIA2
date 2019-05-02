@@ -29,11 +29,13 @@ namespace L05_Server {
 
 	function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void { // Die Funktion erhält eine Request und eine Response
 		console.log("I hear voices!"); // Gibt in der Konsole "I hear voices!" aus.
+		console.log(_request.url);
 
 		_response.setHeader("content-type", "text/html; charset=utf-8"); // Die Ausgabe wird als Text im HTML-Format mit ausgegegben 
 		_response.setHeader("Access-Control-Allow-Origin", "*"); // Hier wird festgelegt ob die übermittelten Informationen Darf 
 
-		_response.write(_request.url); // Die request URL wird in die response geschrieben
+		_response.write(_request.url);
+		  // Die request URL wird in die response geschrieben
 
 		_response.end(); // Sendet alle derzeit gepufferten Ausgaben an den Client, beendet die Ausführung der Seite und löst das EndRequest-Ereignis aus.
 	}

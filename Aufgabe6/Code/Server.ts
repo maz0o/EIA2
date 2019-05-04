@@ -23,6 +23,7 @@ namespace L05_Server {
 	server.addListener("listening", handleListen); // Wenn das Event "listening" stattfindet wird die Funktion handleListen ausgeführt
 	server.listen(port);
 
+
 	function handleListen(): void { // wenn das Event "Listening" abgerufen wird, wird die funktion ausgeführt
 		console.log("Listening");  // Gibt in der Konsole "Listening" aus.
 	}
@@ -34,8 +35,7 @@ namespace L05_Server {
 		_response.setHeader("content-type", "text/html; charset=utf-8"); // Die Ausgabe wird als Text im HTML-Format mit ausgegegben 
 		_response.setHeader("Access-Control-Allow-Origin", "*"); // Hier wird festgelegt ob die übermittelten Informationen Darf 
 
-		_response.write(_request.url);
-		  // Die request URL wird in die response geschrieben
+		_response.write(_request.url); // Die request URL wird in die response geschrieben
 
 		_response.end(); // Sendet alle derzeit gepufferten Ausgaben an den Client, beendet die Ausführung der Seite und löst das EndRequest-Ereignis aus.
 	}

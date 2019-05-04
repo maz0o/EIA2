@@ -37,7 +37,7 @@ var Aufgabe4;
             if (target.name == "Checkbox") {
                 if (cart.length == 0) {
                     console.log("First entry");
-                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.value) });
+                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: 1 });
                     console.log(cart);
                 }
                 else {
@@ -49,13 +49,13 @@ var Aufgabe4;
                             return;
                         }
                     }
-                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.value) });
+                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: 1 });
                 }
             }
             // Selectbox //
             if (target.name == "Selectbox") {
                 let select = document.getElementById("Selectbox");
-                cart.push({ name: select.options[select.selectedIndex].getAttribute("itemName"), price: Number(target.value) });
+                cart.push({ name: select.options[select.selectedIndex].getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: 1 });
                 updateCart();
             }
             // Ice cream stepper //
@@ -68,7 +68,7 @@ var Aufgabe4;
                             return;
                         }
                     }
-                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")) });
+                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: Number(target.value) });
                 }
                 else {
                     for (let i = 0; i < cart.length; i++) {

@@ -12,6 +12,7 @@ namespace Aufgabe4 {
     interface IceCream {
         name: string;
         price: number;
+        amount: number;
     }
 
     // Shopping Cart //
@@ -50,7 +51,7 @@ namespace Aufgabe4 {
             if (target.name == "Checkbox") {
                 if (cart.length == 0) {
                     console.log("First entry");
-                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.value) });
+                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: 1 });
                     console.log(cart);
                 }
                 else {
@@ -62,14 +63,14 @@ namespace Aufgabe4 {
                             return;
                         }
                     }
-                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.value) });
+                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: 1 });
                 }
             }
 
             // Selectbox //
             if (target.name == "Selectbox") {
                 let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Selectbox");
-                cart.push({ name: select.options[select.selectedIndex].getAttribute("itemName"), price: Number(target.value) });
+                cart.push({ name: select.options[select.selectedIndex].getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: 1 });
 
                 updateCart();
             }
@@ -83,7 +84,7 @@ namespace Aufgabe4 {
                             return;
                         }
                     }
-                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")) });
+                    cart.push({ name: target.getAttribute("itemName"), price: Number(target.getAttribute("price")), amount: Number(target.value) });
                 }
                 else {
                     for (let i: number = 0; i < cart.length; i++) {

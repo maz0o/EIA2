@@ -1,0 +1,51 @@
+
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.flex-container{
+    display:-webkit-flex;
+    display:flex;
+    padding: 10%;
+    -webkit-flex-direction:column;
+    flex-direction:column;
+    -webkit-justify-content:center;
+    justify-content: space-evenly;
+    }
+
+.flex-item {
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 50%;
+    margin: 1.5%;
+    width: auto;
+}
+
+.flex-item2 {
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 50%;
+    margin: 1.5%;
+    width: auto;
+}
+
+.flex-item3 {
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 50%;
+    margin: 1.5%;
+    width: 40%;
+    float: right;
+}
+
+html {
+    background-image: url('melti_bg.jpg');
+    background-size: 100%;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+

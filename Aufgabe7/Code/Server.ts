@@ -37,7 +37,7 @@ namespace L07_Server {
 
 		let urlInfo: string[] = _request.url.split("&");
 		for (let i: number = 0; i < urlInfo.length; i++) {
-			_response.write(urlInfo[i]);
+			_response.write("Fetty Joe");
 		}
 		//_response.write(_request.url); // Die request URL wird in die response geschrieben
 

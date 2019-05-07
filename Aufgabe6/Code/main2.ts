@@ -7,7 +7,7 @@ Datum: <27.04.2019>
 Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
 */
 
-namespace Aufgabe5 {
+namespace Aufgabe6 {
 
     // Shopping Cart //
     let cart: IceCream[] = [];

@@ -31,7 +31,7 @@ var L07_Server;
         for (let i = 0; i < urlInfo.length; i++) {
             _response.write(urlInfo[i]);
         }
-        _response.write(_request.url); // Die request URL wird in die response geschrieben
+        //_response.write(_request.url); // Die request URL wird in die response geschrieben
         _response.end(); // Sendet alle derzeit gepufferten Ausgaben an den Client, beendet die Ausführung der Seite und löst das EndRequest-Ereignis aus.
     }
 })(L07_Server || (L07_Server = {}));

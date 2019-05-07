@@ -5,11 +5,8 @@
 	"author": "Jirka, adapted by Lukas",
 	"main": "Server.js",
 	"scripts": {
-		"start": "node Aufgabe6/Code/Server.js"
-<<<<<<< HEAD
-	
-=======
->>>>>>> 12c08e57f11db585c7ccf0f0ed1b703c55d18472
+		"start": "node Aufgabe7/Code/Server.js"
+
 	},
 	"engines": {
 		"node": "8.11.3"

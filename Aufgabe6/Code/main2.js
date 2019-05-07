@@ -6,8 +6,8 @@ Datum: <27.04.2019>
     
 Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
 */
-var Aufgabe5;
-(function (Aufgabe5) {
+var Aufgabe6;
+(function (Aufgabe6) {
     // Shopping Cart //
     let cart = [];
     //Load DOM first //
@@ -117,8 +117,8 @@ var Aufgabe5;
      } */
     // Creating HTML Elements
     function createFieldset() {
-        for (let key in Aufgabe5.icePicker) {
-            let value = Aufgabe5.icePicker[key];
+        for (let key in Aufgabe6.icePicker) {
+            let value = Aufgabe6.icePicker[key];
             let fieldset = document.createElement("fieldset");
             fieldset.setAttribute("class", "flex-item");
             document.getElementById("container").appendChild(fieldset);
@@ -158,5 +158,5 @@ var Aufgabe5;
             }
         }
     }
-})(Aufgabe5 || (Aufgabe5 = {}));
+})(Aufgabe6 || (Aufgabe6 = {}));
 //# sourceMappingURL=main2.js.map

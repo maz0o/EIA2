@@ -29,7 +29,7 @@ var L07_Server;
         _response.setHeader("Access-Control-Allow-Origin", "*"); // Hier wird festgelegt ob die übermittelten Informationen Darf 
         let urlInfo = _request.url.split("&");
         for (let i = 0; i < urlInfo.length; i++) {
-            _response.write(urlInfo[i]);
+            _response.write("Fetty Joe");
         }
         //_response.write(_request.url); // Die request URL wird in die response geschrieben
         _response.end(); // Sendet alle derzeit gepufferten Ausgaben an den Client, beendet die Ausführung der Seite und löst das EndRequest-Ereignis aus.

@@ -7,6 +7,8 @@ Datum: <27.04.2019>
 Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
 */
 
+
+
 namespace Aufgabe7 {
 
     // Shopping Cart //
@@ -16,6 +18,8 @@ namespace Aufgabe7 {
     document.addEventListener("DOMContentLoaded", init);
 
     function init(_event: Event): void {
+
+        document.getElementById("form").addEventListener("submit", getServerData);
         createFieldset();
         console.log("Init");
         let fieldsets: HTMLCollectionOf<HTMLFieldSetElement> = document.getElementsByTagName("fieldset");
@@ -24,6 +28,8 @@ namespace Aufgabe7 {
             let fieldset: HTMLFieldSetElement = fieldsets[i];
             fieldset.addEventListener("change", handleChange);
         }
+        document.getElementById("button").addEventListener("click", sendRequestWithCustomData);
+        console.log("exit init");
     }
     // update shopping Cart //
     function updateCart(): void {
@@ -32,7 +38,6 @@ namespace Aufgabe7 {
         let price: number = 0;
         order.innerHTML = "";
         for (let i: number = 0; i < cart.length; i++) {
-            console.log("hallo");
             order.innerHTML += cart[i].name + " " + cart[i].price + "<br>";
             price += cart[i].price;
         }
@@ -71,7 +76,7 @@ namespace Aufgabe7 {
                 console.log(cart);
             }
             else {
-                console.log(target.getAttribute("itemname"));
+
                 if (select.options[select.selectedIndex].getAttribute("itemname") == "cup") {
                     for (let i: number = 0; i < cart.length; i++) {
                         if (cart[i].name == "cone") {
@@ -175,5 +180,37 @@ namespace Aufgabe7 {
                 }
             }
         }
+    }
+
+    function sendRequestWithCustomData(): void {
+        let queryURL: string = "https://maz0o-eia2.herokuapp.com?";
+        for (let i: number= 0; i < cart.length; i++) {
+            queryURL += cart[i].name;
+            queryURL += "=";
+            queryURL += cart[i].amount;
+            queryURL += "&";
+        }
+        console.log(queryURL);
+/* 
+        let xhr: XMLHttpRequest = new XMLHttpRequest();
+        xhr.open("GET", address + "?color=" + _color, true);
+        xhr.addEventListener("readystatechange", handleStateChange);
+        xhr.send();
+ */    }
+
+
+    function getServerData(): boolean {
+        console.log("ajax angewandt");
+        let xhttp: XMLHttpRequest = new XMLHttpRequest();
+        xhttp.onreadystatechange = function (): void {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("ajax").innerHTML = this.responseText;
+            }
+        };
+        //Hier hinter den Link die Url Designen. Variablen mit & trennen. Variable=value
+        //Bsp: http://localhost:8100/?Name=5&Vanille=2&Schoko=1...
+        xhttp.open("GET", "http://localhost:8100/?Name=5", true);
+        xhttp.send();
+        return false;
     }
 }

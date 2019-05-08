@@ -6,7 +6,6 @@
 	"main": "Server.js",
 	"scripts": {
 		"start": "node Aufgabe7/Code/Server.js"
-
 	},
 	"engines": {
 		"node": "8.11.3"

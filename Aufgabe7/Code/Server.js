@@ -9,6 +9,7 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde n
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 const Http = require("http"); //  Es wird ein HTTP Objekt erstellt, der interpreter sucht nach jeden möglichen import im http modul und hängt eins nach dem anderen dem http objekt zu.
+const Url = require("url");
 var L07_Server;
 (function (L07_Server) {
     console.log("Starting server"); // Gibt in der Konsole "Starting server" aus.
@@ -27,12 +28,19 @@ var L07_Server;
         console.log(_request.url);
         _response.setHeader("content-type", "text/html; charset=utf-8"); // Die Ausgabe wird als Text im HTML-Format mit ausgegegben 
         _response.setHeader("Access-Control-Allow-Origin", "*"); // Hier wird festgelegt ob die übermittelten Informationen Darf 
-        let urlInfo = _request.url.split("&");
-        for (let i = 0; i < urlInfo.length; i++) {
-            _response.write("Fetty Joe");
+        /* //Variablen definieren und Wert zuordnen
+        for (let i: number = 0; i < urlInfo.length; i++) {
+            let valAndName: string[] = urlInfo.splice("=");
+            let valueName = valAndName[0];
+            let value: number = Number(valAndName[1]);
+            drawHtml(valueName, value);
+        } */
+        let url = Url.parse(_request.url, true);
+        for (let key in url.query) {
+            _response.write(key + ":" + url.query[key] + "<br/>");
         }
-        //_response.write(_request.url); // Die request URL wird in die response geschrieben
         _response.end(); // Sendet alle derzeit gepufferten Ausgaben an den Client, beendet die Ausführung der Seite und löst das EndRequest-Ereignis aus.
     }
 })(L07_Server || (L07_Server = {}));
+//  /?Matcha=2&Thunder=0&Melon=0&Fudge=0&Grannys+Apple+Pie=0&Cinnamon+Heaven=2&Cookie+Dough=0&Sprinkles=0&Peanut+Butter+Cups=0&select=cone
 //# sourceMappingURL=Server.js.map

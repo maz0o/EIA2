@@ -37,7 +37,7 @@ var L07_Server;
         } */
         let url = Url.parse(_request.url, true);
         for (let key in url.query) {
-            _response.write(key + ":" + url.query[key] + "<br/>");
+            _response.write(key + " : " + url.query[key] + "<br/>");
         }
         _response.end(); // Sendet alle derzeit gepufferten Ausgaben an den Client, beendet die Ausführung der Seite und löst das EndRequest-Ereignis aus.
     }

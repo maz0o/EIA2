@@ -18,8 +18,6 @@ namespace Aufgabe7 {
     document.addEventListener("DOMContentLoaded", init);
 
     function init(_event: Event): void {
-
-        document.getElementById("form").addEventListener("submit", getServerData);
         createFieldset();
         console.log("Init");
         let fieldsets: HTMLCollectionOf<HTMLFieldSetElement> = document.getElementsByTagName("fieldset");
@@ -28,7 +26,7 @@ namespace Aufgabe7 {
             let fieldset: HTMLFieldSetElement = fieldsets[i];
             fieldset.addEventListener("change", handleChange);
         }
-        document.getElementById("button").addEventListener("click", sendRequestWithCustomData);
+        document.getElementById("button").addEventListener("click", checkOrder);
         console.log("exit init");
     }
     // update shopping Cart //
@@ -182,35 +180,72 @@ namespace Aufgabe7 {
         }
     }
 
+    function checkOrder(): void {
+        if (cart.length == 0) {
+            alert("You didn't order anything, bruh!");
+            return;
+        }
+        if (
+            (<HTMLInputElement>document.getElementById("lastname")).value == "" ||
+            (<HTMLInputElement>document.getElementById("firstname")).value == "" ||
+            (<HTMLInputElement>document.getElementById("street")).value == "" ||
+            Number((<HTMLInputElement>document.getElementById("aprtNumber")).value) == NaN ||
+            (<HTMLInputElement>document.getElementById("city")).value == "" ||
+            Number((<HTMLInputElement>document.getElementById("zipCode")).value) == NaN ||
+            (<HTMLInputElement>document.getElementById("zipCode")).value.length != 5
+        ) {
+            alert("Please check your address data, bruh");
+            return;
+        }
+
+        sendRequestWithCustomData();
+    }
+
+
     function sendRequestWithCustomData(): void {
         let queryURL: string = "https://maz0o-eia2.herokuapp.com?";
-        for (let i: number= 0; i < cart.length; i++) {
+        for (let i: number = 0; i < cart.length; i++) {
             queryURL += cart[i].name;
             queryURL += "=";
             queryURL += cart[i].amount;
             queryURL += "&";
         }
-        console.log(queryURL);
-/* 
+        queryURL += "lastname";
+        queryURL += "=";
+        queryURL += (<HTMLInputElement>document.getElementById("lastname")).value;
+        queryURL += "&";
+        queryURL += "firstname";
+        queryURL += "=";
+        queryURL += (<HTMLInputElement>document.getElementById("firstname")).value;
+        queryURL += "&";
+        queryURL += "street";
+        queryURL += "=";
+        queryURL += (<HTMLInputElement>document.getElementById("street")).value;
+        queryURL += "&";
+        queryURL += "apartmentnumber";
+        queryURL += "=";
+        queryURL += (<HTMLInputElement>document.getElementById("aprtNumber")).value;
+        queryURL += "&";
+        queryURL += "city";
+        queryURL += "=";
+        queryURL += (<HTMLInputElement>document.getElementById("city")).value;
+        queryURL += "&";
+        queryURL += "zipcode";
+        queryURL += "=";
+        queryURL += (<HTMLInputElement>document.getElementById("zipCode")).value;
+
+
         let xhr: XMLHttpRequest = new XMLHttpRequest();
-        xhr.open("GET", address + "?color=" + _color, true);
+        xhr.open("GET", queryURL, true);
         xhr.addEventListener("readystatechange", handleStateChange);
         xhr.send();
- */    }
+    }
 
-
-    function getServerData(): boolean {
-        console.log("ajax angewandt");
-        let xhttp: XMLHttpRequest = new XMLHttpRequest();
-        xhttp.onreadystatechange = function (): void {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("ajax").innerHTML = this.responseText;
-            }
-        };
-        //Hier hinter den Link die Url Designen. Variablen mit & trennen. Variable=value
-        //Bsp: http://localhost:8100/?Name=5&Vanille=2&Schoko=1...
-        xhttp.open("GET", "http://localhost:8100/?Name=5", true);
-        xhttp.send();
-        return false;
+    function handleStateChange(_event: ProgressEvent): void {
+        let xhr: XMLHttpRequest = <XMLHttpRequest>_event.target;
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            document.getElementById("fettyJoe").innerHTML = "<H2> We received your order, bruh </H2>";
+            document.getElementById("fettyJoe").innerHTML += (xhr.response);
+        }
     }
 }

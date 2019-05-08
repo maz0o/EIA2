@@ -13,7 +13,6 @@ var Aufgabe7;
     //Load DOM first //
     document.addEventListener("DOMContentLoaded", init);
     function init(_event) {
-        document.getElementById("form").addEventListener("submit", getServerData);
         createFieldset();
         console.log("Init");
         let fieldsets = document.getElementsByTagName("fieldset");
@@ -21,7 +20,7 @@ var Aufgabe7;
             let fieldset = fieldsets[i];
             fieldset.addEventListener("change", handleChange);
         }
-        document.getElementById("button").addEventListener("click", sendRequestWithCustomData);
+        document.getElementById("button").addEventListener("click", checkOrder);
         console.log("exit init");
     }
     // update shopping Cart //
@@ -159,6 +158,23 @@ var Aufgabe7;
             }
         }
     }
+    function checkOrder() {
+        if (cart.length == 0) {
+            alert("You didn't order anything, bruh!");
+            return;
+        }
+        if (document.getElementById("lastname").value == "" ||
+            document.getElementById("firstname").value == "" ||
+            document.getElementById("street").value == "" ||
+            Number(document.getElementById("aprtNumber").value) == NaN ||
+            document.getElementById("city").value == "" ||
+            Number(document.getElementById("zipCode").value) == NaN ||
+            document.getElementById("zipCode").value.length != 5) {
+            alert("Please check your address data, bruh");
+            return;
+        }
+        sendRequestWithCustomData();
+    }
     function sendRequestWithCustomData() {
         let queryURL = "https://maz0o-eia2.herokuapp.com?";
         for (let i = 0; i < cart.length; i++) {
@@ -167,27 +183,40 @@ var Aufgabe7;
             queryURL += cart[i].amount;
             queryURL += "&";
         }
-        console.log(queryURL);
-        /*
-                let xhr: XMLHttpRequest = new XMLHttpRequest();
-                xhr.open("GET", address + "?color=" + _color, true);
-                xhr.addEventListener("readystatechange", handleStateChange);
-                xhr.send();
-         */ 
+        queryURL += "lastname";
+        queryURL += "=";
+        queryURL += document.getElementById("lastname").value;
+        queryURL += "&";
+        queryURL += "firstname";
+        queryURL += "=";
+        queryURL += document.getElementById("firstname").value;
+        queryURL += "&";
+        queryURL += "street";
+        queryURL += "=";
+        queryURL += document.getElementById("street").value;
+        queryURL += "&";
+        queryURL += "apartmentnumber";
+        queryURL += "=";
+        queryURL += document.getElementById("aprtNumber").value;
+        queryURL += "&";
+        queryURL += "city";
+        queryURL += "=";
+        queryURL += document.getElementById("city").value;
+        queryURL += "&";
+        queryURL += "zipcode";
+        queryURL += "=";
+        queryURL += document.getElementById("zipCode").value;
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", queryURL, true);
+        xhr.addEventListener("readystatechange", handleStateChange);
+        xhr.send();
     }
-    function getServerData() {
-        console.log("ajax angewandt");
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("ajax").innerHTML = this.responseText;
-            }
-        };
-        //Hier hinter den Link die Url Designen. Variablen mit & trennen. Variable=value
-        //Bsp: http://localhost:8100/?Name=5&Vanille=2&Schoko=1...
-        xhttp.open("GET", "http://localhost:8100/?Name=5", true);
-        xhttp.send();
-        return false;
+    function handleStateChange(_event) {
+        let xhr = _event.target;
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            document.getElementById("fettyJoe").innerHTML = "<H2> We received your order, bruh </H2>";
+            document.getElementById("fettyJoe").innerHTML += (xhr.response);
+        }
     }
 })(Aufgabe7 || (Aufgabe7 = {}));
 //# sourceMappingURL=main2.js.map

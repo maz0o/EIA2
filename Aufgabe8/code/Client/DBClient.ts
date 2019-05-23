@@ -1,6 +1,6 @@
 namespace DBClient {
     window.addEventListener("load", init);
-    let serverAddress: string = "http://localhost:8100";
+    let serverAddress: string = "https://maz0o-eia2.herokuapp.com/";
     //let serverAddress: string = "https://<your>.herokuapp.com/";
 
     function init(_event: Event): void {
@@ -31,6 +31,12 @@ namespace DBClient {
         xhr.open("GET", serverAddress + "?" + _query, true);
         xhr.addEventListener("readystatechange", _callback);
         xhr.send();
+    }
+
+    function searchRequest(_event: Event): void {
+    let query: string = "command=searchRequest";
+    query += "&" + "matrikel=" + (<HTMLInputElement>document.getElementById("search")).value;
+    sendRequest(query, handleFindResponse);
     }
 
     function handleInsertResponse(_event: ProgressEvent): void {

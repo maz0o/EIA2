@@ -28,8 +28,8 @@ function handleListen(): void {
 function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
     console.log("Request received");
 
-    let query: AssocStringString = <AssocStringString> Url.parse(_request.url, true).query;
-    var command: string = query["command"]; 
+    let query: AssocStringString = <AssocStringString>Url.parse(_request.url, true).query;
+    var command: string = query["command"];
 
     switch (command) { /* Legen eine Variable command an */
         case "insert":
@@ -43,6 +43,9 @@ function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerRes
             break;
         case "refresh":
             Database.findAll(findCallback);
+            break;
+        case "searchRequest":
+            Database.find(findCallback, parseInt(query["matrikel"]));
             break;
         default:
             respond(_response, "unknown command: " + command);

@@ -13,8 +13,8 @@ let students: Mongo.Collection;
 // running on heroku?
 if (process.env.NODE_ENV == "production") {
     //    databaseURL = "mongodb://username:password@hostname:port/database";
-    databaseURL = "mongodb+srv://testuser:testpassword@eia2-57vpd.mongodb.net/eia2";
-    databaseName = "eia2";
+    databaseURL = "mongodb+srv://maz0oTest:usertest1337@maz0o-eia2-ghov3.mongodb.net/HFU";
+    databaseName = "HFU";
 }
 
 // try to connect to database, then activate callback "handleConnect" 
@@ -44,9 +44,27 @@ function handleInsert(_e: Mongo.MongoError): void {
 // try to fetch all documents from database, then activate callback
 export function findAll(_callback: Function): void {
     // cursor points to the retreived set of documents in memory
-    var cursor: Mongo.Cursor = students.find();
+    let cursor: Mongo.Cursor = students.find();
     // try to convert to array, then activate callback "prepareAnswer"
     cursor.toArray(prepareAnswer);
+
+
+    // toArray-handler receives two standard parameters, an error object and the array
+    // implemented as inner function, so _callback is in scope
+    function prepareAnswer(_e: Mongo.MongoError, studentArray: StudentData[]): void {
+        if (_e)
+            _callback("Error" + _e);
+        else
+            // stringify creates a json-string, passed it back to _callback
+            _callback(JSON.stringify(studentArray));
+    }
+}
+export function find(_callback: Function, _input: number): void {
+    // cursor points to the retreived set of documents in memory
+    let cursor: Mongo.Cursor = students.find({matrikel: _input});
+    // try to convert to array, then activate callback "prepareAnswer"
+    cursor.toArray(prepareAnswer);
+
 
     // toArray-handler receives two standard parameters, an error object and the array
     // implemented as inner function, so _callback is in scope

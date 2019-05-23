@@ -1,7 +1,7 @@
 var DBClient;
 (function (DBClient) {
     window.addEventListener("load", init);
-    let serverAddress = "http://localhost:8100";
+    let serverAddress = "https://maz0o-eia2.herokuapp.com/";
     //let serverAddress: string = "https://<your>.herokuapp.com/";
     function init(_event) {
         console.log("Init");
@@ -28,6 +28,11 @@ var DBClient;
         xhr.open("GET", serverAddress + "?" + _query, true);
         xhr.addEventListener("readystatechange", _callback);
         xhr.send();
+    }
+    function searchRequest(_event) {
+        let query = "command=searchRequest";
+        query += "&" + "matrikel=" + document.getElementById("search").value;
+        sendRequest(query, handleFindResponse);
     }
     function handleInsertResponse(_event) {
         let xhr = _event.target;

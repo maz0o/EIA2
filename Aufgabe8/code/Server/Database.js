@@ -13,8 +13,8 @@ let students;
 // running on heroku?
 if (process.env.NODE_ENV == "production") {
     //    databaseURL = "mongodb://username:password@hostname:port/database";
-    databaseURL = "mongodb+srv://testuser:testpassword@eia2-57vpd.mongodb.net/eia2";
-    databaseName = "eia2";
+    databaseURL = "mongodb+srv://maz0oTest:usertest1337@maz0o-eia2-ghov3.mongodb.net/HFU";
+    databaseName = "HFU";
 }
 // try to connect to database, then activate callback "handleConnect" 
 Mongo.MongoClient.connect(databaseURL, { connectTimeoutMS: 8000 }, handleConnect);
@@ -40,7 +40,7 @@ function handleInsert(_e) {
 // try to fetch all documents from database, then activate callback
 function findAll(_callback) {
     // cursor points to the retreived set of documents in memory
-    var cursor = students.find();
+    let cursor = students.find();
     // try to convert to array, then activate callback "prepareAnswer"
     cursor.toArray(prepareAnswer);
     // toArray-handler receives two standard parameters, an error object and the array
@@ -54,4 +54,20 @@ function findAll(_callback) {
     }
 }
 exports.findAll = findAll;
+function find(_callback, _input) {
+    // cursor points to the retreived set of documents in memory
+    let cursor = students.find({ matrikel: _input });
+    // try to convert to array, then activate callback "prepareAnswer"
+    cursor.toArray(prepareAnswer);
+    // toArray-handler receives two standard parameters, an error object and the array
+    // implemented as inner function, so _callback is in scope
+    function prepareAnswer(_e, studentArray) {
+        if (_e)
+            _callback("Error" + _e);
+        else
+            // stringify creates a json-string, passed it back to _callback
+            _callback(JSON.stringify(studentArray));
+    }
+}
+exports.find = find;
 //# sourceMappingURL=Database.js.map

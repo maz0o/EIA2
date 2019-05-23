@@ -5,12 +5,15 @@
 	"author": "Jirka, adapted by Lukas",
 	"main": "Server.js",
 	"scripts": {
-		"start": "node Aufgabe7/Code/Server.js"
+		"start": "node Aufgabe8/Code/Server/Server.js"
 	},
 	"engines": {
-		"node": "8.11.3"
+		"node": "8.11.3",
+		"mongodb": "^3.2.5"
 	},
 	"dependencies": {
-		"@types/node": "^11.13.8"
+		"@types/mongodb": "^3.1.27",
+		"@types/node": "^11.13.8",
+		"mongodb": "^3.2.5"
 	}
 }

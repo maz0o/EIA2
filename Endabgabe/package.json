@@ -5,7 +5,7 @@
 	"author": "Jirka, adapted by Lukas",
 	"main": "Server.js",
 	"scripts": {
-		"start": "node endabgabe/Server/Server.js"
+		"start": "node Endabgabe/endabgabe/Server/Server.js"
 	},
 	"engines": {
 		"node": "8.11.3",

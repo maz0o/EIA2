@@ -17,20 +17,53 @@ namespace endabgabe {
     let playTime: number;
     let scoreUploadOpen: boolean = true;
 
+    function handleClick(_event: MouseEvent): void {
+        let x: number = _event.clientX;
+        let y: number = _event.clientY;
+        console.log("x:" + x + "y:" + y);
+
+        if (x >= 50 && x <= 160 && y >= 150 && y <= 180)
+            window.location.assign("file:///C:/Users/marco/Documents/Studium/Semester_2/EIA2/config/EIA2/Endabgabe/endabgabe/index.html");
+
+        if (x >= 60 && x <= 345 && y >= 245 && y <= 285) {
+            crc.font = "20px Comic Sans MS";
+            crc.fillText("bla bla", 460, 100);
+            crc.fillText("bla bla", 460, 170);
+        }
+        
+            
+    }
+
     function init(): void {
         canvas = <HTMLCanvasElement>document.getElementById("canvas");
         crc = canvas.getContext("2d");
+        canvas.addEventListener("click", handleClick);
 
         drawBackground();
 
 
+
+
+
         imageData = crc.getImageData(0, 0, canvas.width, canvas.height);
         imageData2 = imageData;
+
+        crc.font = "40px Comic Sans MS";
+        crc.fillText("PLAY", 30, 100);
+
+        crc.font = "40px Comic Sans MS";
+        crc.fillText("HOW TO PLAY", 30, 200);
+
+        crc.font = "40px Comic Sans MS";
+        crc.fillText("HIGHSCORE", 30, 300);
+
         let x: number = canvas.width / 2;
         let y: number = canvas.height / 2;
         let dx: number = 0;
         playerFish = new PlayerFish(x, y, "#FFDC00");
         playerFish.draw();
+
+
 
         for (let i: number = 0; i < 5; i++) {
             let size: number = 2;

@@ -34,10 +34,17 @@ var endabgabe;
     function handleFindResponse(_event) {
         let xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            let output = document.getElementsByTagName("textarea")[0];
-            output.value = xhr.response;
-            let responseAsJson = JSON.parse(xhr.response);
-            console.log(responseAsJson);
+            /*  let output: HTMLTextAreaElement = document.getElementsByTagName("textarea")[0];
+             output.value = xhr.response;
+             let responseAsJson: JSON = JSON.parse(xhr.response);
+             console.log(responseAsJson); */
+            let scoresPlayerArray = JSON.parse(xhr.response);
+            document.getElementById("scores").innerHTML = "";
+            for (let i = 0; i < 15; i++)
+                ;
+            let scoreNew = document.createElement("div");
+            document.getElementById("scores").appendChild(scoreNew);
+            scoreNew.innerHTML = `$ {scoresPlayerArray [i].name} : $ {scorePlayerArray [i].score}`;
         }
     }
 })(endabgabe || (endabgabe = {}));

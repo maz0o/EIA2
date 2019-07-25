@@ -10,12 +10,32 @@ var endabgabe;
     let playerFish;
     endabgabe.score = 0;
     let playTime;
+    let scoreUploadOpen = true;
+    function handleClick(_event) {
+        let x = _event.clientX;
+        let y = _event.clientY;
+        console.log("x:" + x + "y:" + y);
+        if (x >= 50 && x <= 160 && y >= 150 && y <= 180)
+            window.location.assign("file:///C:/Users/marco/Documents/Studium/Semester_2/EIA2/config/EIA2/Endabgabe/endabgabe/index.html");
+        if (x >= 60 && x <= 345 && y >= 245 && y <= 285) {
+            endabgabe.crc.font = "20px Comic Sans MS";
+            endabgabe.crc.fillText("bla bla", 460, 100);
+            endabgabe.crc.fillText("bla bla", 460, 170);
+        }
+    }
     function init() {
         endabgabe.canvas = document.getElementById("canvas");
         endabgabe.crc = endabgabe.canvas.getContext("2d");
+        endabgabe.canvas.addEventListener("click", handleClick);
         drawBackground();
         imageData = endabgabe.crc.getImageData(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
         imageData2 = imageData;
+        endabgabe.crc.font = "40px Comic Sans MS";
+        endabgabe.crc.fillText("PLAY", 30, 100);
+        endabgabe.crc.font = "40px Comic Sans MS";
+        endabgabe.crc.fillText("HOW TO PLAY", 30, 200);
+        endabgabe.crc.font = "40px Comic Sans MS";
+        endabgabe.crc.fillText("HIGHSCORE", 30, 300);
         let x = endabgabe.canvas.width / 2;
         let y = endabgabe.canvas.height / 2;
         let dx = 0;
@@ -76,6 +96,7 @@ var endabgabe;
             window.clearTimeout(playTime);
             endabgabe.insert();
             endabgabe.refresh();
+            scoreUploadOpen = false;
         }
         for (let i = 0; i < wholesomeOcean.length; i++) {
             let currentObject = wholesomeOcean[i];
@@ -111,7 +132,8 @@ var endabgabe;
                     }
                     else {
                         console.log("My size: " + playerFish.scale + ", His size: " + currentObject.size);
-                        myalert();
+                        if (scoreUploadOpen == true)
+                            myalert();
                     }
                 }
             }

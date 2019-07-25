@@ -5,7 +5,7 @@ namespace endabgabe {
     export let canvas: HTMLCanvasElement;
 
     let wholesomeOcean: WholesomeOcean[] = [];
-    export  let serverAddress: string = "https://maz0o-eia2.herokuapp.com/";
+    export let serverAddress: string = "https://maz0o-eia2.herokuapp.com/";
 
 
     let fps: number = 30;
@@ -15,6 +15,7 @@ namespace endabgabe {
     export let playerName: string;
     export let score: number = 0;
     let playTime: number;
+    let scoreUploadOpen: boolean = true;
 
     function init(): void {
         canvas = <HTMLCanvasElement>document.getElementById("canvas");
@@ -99,10 +100,12 @@ namespace endabgabe {
         }
 
         function myalert(): void {
+
             playerName = prompt("Game Over score:" + score, "Who are you?");
             window.clearTimeout(playTime);
             insert();
             refresh();
+            scoreUploadOpen = false;
         }
 
 
@@ -145,7 +148,8 @@ namespace endabgabe {
 
                     } else {
                         console.log("My size: " + playerFish.scale + ", His size: " + currentObject.size);
-                        myalert();
+                        if (scoreUploadOpen == true)
+                            myalert();
                     }
 
                 }

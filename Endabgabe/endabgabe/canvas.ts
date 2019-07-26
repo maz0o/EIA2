@@ -1,13 +1,14 @@
 namespace endabgabe {
     document.addEventListener("DOMContentLoaded", init);
     window.addEventListener("keydown", moveSomething, false);
+    window.addEventListener("keyup", moveNothing, false);
+
     export let crc: CanvasRenderingContext2D;
     export let canvas: HTMLCanvasElement;
-
-    let wholesomeOcean: WholesomeOcean[] = [];
     export let serverAddress: string = "https://maz0o-eia2.herokuapp.com/";
-
-
+    export let playerName: string;
+    export let score: number = 0;
+    let wholesomeOcean: WholesomeOcean[] = [];
     let menu: boolean = true;
     let fps: number = 30;
     let speed: number = 1;
@@ -15,10 +16,10 @@ namespace endabgabe {
     let imageData: ImageData;
     let imageData2: ImageData;
     let playerFish: PlayerFish;
-    export let playerName: string;
-    export let score: number = 0;
+    let counter: number = 0;
     let playTime: number;
     let scoreUploadOpen: boolean = true;
+
 
     function handleClick(_event: MouseEvent): void {
         // canvas.getBoundingClientRect().left
@@ -46,7 +47,57 @@ namespace endabgabe {
         canvas = <HTMLCanvasElement>document.getElementById("canvas");
         crc = canvas.getContext("2d");
         canvas.removeEventListener("click", handleClick);
-
+        refresh();
+        /* console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWMMMWWNX0Okkkkk0NWMWMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWNX0kxdooloodddlckNWWMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNX0kxdollodxkkkkkOkockWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWNX0kollcloddxxxxxxxxxxdcl0WWMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMWWMMWWNX00OkxxxdddlcccclllloooooooooooolcxNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMWNK0kxdolcccccccccccllccccccccccclllllllccOWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMWNKOxolccccclllccllllccclllccccccccccccccccccoKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMWXOxolccllccccllllllcclcllllllcllllllccllllccccco0WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMWX0xlccllllllllllllllllllllllllllllllllllllllllllllclxKNWMMMMMMMMMMMMMMMMMMMMMMWWWMMM" + "\n" +
+        "MMMMMMMMMMWWMWKkocclllllllllllllllllllllllllllllllllllllllllllllllllcld0NMMMMMMMMMMMMMMMMMMMMWWX0NMM" + "\n" +
+        "MMMMMMMMMMWNKxlclloooooolcclolooooooooooooooooooooooooooooooooooooooolclxKWMMMMMMMMMMMMMMMMMWXOldXMM" + "\n" +
+        "MMMMMMMMWN0xlcloooooooooolccloooooooooooooooooooooooooooooooooooooooooolclkXWWMMMMMMMMMMMWWNOocckWMM" + "\n" +
+        "MMMMMMMWXkllloodxOOOOxdoddolclooooooooooooooooooooooooooooooooooooooooooolcdKWWWMMMMMMMMWN0dcccl0MMM" + "\n" +
+        "MMMMWWW0ocooodkKNXOOXNKkdodoccodddddddddddddddddddddddddddddddddddddddddddoclONMMMMWWMWXOdllolcxNMMM" + "\n" +
+        "MMMMWNkllodddxKWk'  'kWKxdddlcldddddddddddddddddddddddddddddddddddddddddddddlcd0NWNNK0xolloddll0MMMM" + "\n" +
+        "MMMWXxclddxxdxXWx.  .xWXkdxdolcoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdddddddxxdddolloddollloddxdocdXMMMM" + "\n" +
+        "MMWKdcodxxxxxxOXN0xx0NXOxxxxxlcoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdddddddxxxxxdlckWMMMM" + "\n" +
+        "MMXdcldxxxxxxxxkO0KKKOkxxxxxxocoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxkdll0MMMMM" + "\n" +
+        "MMN0xollloddxkkkkkkkkkkkkkkOkoldkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkOxcoKMMMMM" + "\n" +
+        "MMMMWNX0OkdlcdO0OO0000OOOO00OdoxO0000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO0OOOO00OOO0xloKMMMMM" + "\n" +
+        "MMMMMWNK0kdlok0K0000000KKKKKOddOKKKKKKKK0000000000000000000000000KKKKKKKK000K0OOkkO00KKKK0KkllKMMMMM" + "\n" +
+        "MMMMW0olodkOKKKXXXXXXXXXKKXKkdkKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXKKKKKKKKXK0kooooooodOKXXXK0ol0WMMMM" + "\n" +
+        "MMMWWOllkKNXXXXXXXXXXXXNXXNKxkKNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXKkolx0XNNXOdloOKXNKdckWMMMM" + "\n" +
+        "MMMMMWKdld0NNNNNNNNWNNNNNWXOOXNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNWNNNNNKxldKWWWWWWWN0xlokXNkcdXMMMM" + "\n" +
+        "MMMMMMMNOolx0NWWWWWWWWWWWN00NWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWNOolkNMWMMMMMMMMWKxlo00ol0MMMM" + "\n" +
+        "MMMMMMMMWXOdldOXWWWWWMMMWXXWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWNKxld0WMMMMMMMMMMMMMWKxlolcxNMMM" + "\n" +
+        "MMMMMMMMWWWN0xoox0XWWMMMMWWMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWXOdloONMMMMMMMMMMMMMMMMWWKxlcoKMMM" + "\n" +
+        "MMMMMMMMMMMMMWN0xoodkKXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNKOxocccxNMMMMMMMMMMMMMMMMMMMMWXkxKMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMWNKkdoodkOKXNWMWMMMMMMMMMMMMMMMMMMWWMMWWNX0Okxolloooocl0MMMMMMMMMMMMMMMMMMMMMMMWMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMWMWNKOkdooodxkO00KKXXXXXXXXXXK0OOOkxxdolllodxkkOOOOdcdXMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMWWWWNK0OkkxddollllloollllcldxxxkOkdolloxkOO0KKXKdckWMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWN0dlclodddolcxNWWMMMWWNKOkxdoooddddocxNMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNKkolodxxlcOWMMMMMMMMMMMWWNXK00OO0KNWMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWX0kdooldXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWMWNXXKXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"); */
         drawBackground();
 
 
@@ -70,7 +121,7 @@ namespace endabgabe {
             let x: number = canvas.width / 4;
             let y: number = canvas.height / 2;
             let dx: number = 0;
-            playerFish = new PlayerFish(x, y, "#FFDC00");
+            playerFish = new PlayerFish(x, y, 0, 0, "#FFDC00");
             playerFish.draw();
 
             document.getElementById("highscore").innerHTML = "Highscore: " + score;
@@ -87,8 +138,6 @@ namespace endabgabe {
                 wholesomeOcean.push(fish);
                 fish.draw();
             }
-
-
 
             for (let i: number = 0; i < 5; i++) {
                 let size: number = 2;
@@ -112,9 +161,6 @@ namespace endabgabe {
                 fish3.draw();
             }
 
-
-
-
             for (let i: number = 0; i < 20; i++) {
                 let x: number = Math.random() * canvas.width;
                 let y: number = ((Math.random() * 360) + 0);
@@ -135,17 +181,9 @@ namespace endabgabe {
                 bubbleSmall.draw();
             }
             console.log(wholesomeOcean);
-
-
-
-
             if (firstGame) update();
         }
     }
-
-    let counter: number = 0;
-
-
 
     function update(): void {
         if (!menu) {
@@ -227,7 +265,7 @@ namespace endabgabe {
                     } else {
                         if (currentObject instanceof Fish3) {
                             wholesomeOcean.splice(i, 1);
-                            
+
                             playerFish.scale -= playerFish.scale / 2;
                             if (playerFish.scale <= 0.9) {
                                 myalert();
@@ -237,14 +275,14 @@ namespace endabgabe {
                                 let y: number = Math.random() * canvas.height;
                                 let dx: number = Math.random() * 3 + 6;
                                 let fish3: Fish3 = new Fish3(x, y, speed * dx, "#65ff00", size);
-                                
+
                                 wholesomeOcean.push(fish3);
+                                score -= 50;
+                                document.getElementById("highscore").innerHTML = "Highscore: " + score;
                             }
-                            
-                            score -= 50;
 
 
-                            
+
                         } else if (currentObject instanceof Fish2) {
                             myalert();
                         } else if (scoreUploadOpen == true) {
@@ -258,13 +296,9 @@ namespace endabgabe {
             }
 
         }
-        if (!menu) playerFish.draw();
+        if (!menu) playerFish.update();
         playTime = window.setTimeout(update, 1000 / fps);
     }
-
-    /* if this.x < canvas.width {
-        this.x = -20._x
-    } */
 
     function drawBackground(): void {
         let sand: Path2D = new Path2D();
@@ -449,50 +483,55 @@ namespace endabgabe {
         crc.fill(plant6);
     }
 
-    function sand(_x: number, _y: number): void {
-        let sand: Path2D = new Path2D();
-        sand.rect(_x, _y, 7, 7);
-        crc.fillStyle = "#DDDDDD";
-        crc.fill(sand);
-        crc.stroke(sand);
-    }
-
-
     function moveSomething(e: KeyboardEvent): void {
 
         switch (e.keyCode) {
             case 37: // left key pressed break; 
                 if (playerFish.x >= 0 + (100 * playerFish.scale / 2)) {
-                    playerFish.x -= 15;
+                    playerFish.dx = -15;
                 }
                 break;
             case 38: // up key pressed break;
                 if (playerFish.y >= 0 + (30 * playerFish.scale / 2)) {
-                    playerFish.y -= 15;
+                    playerFish.dy = -15;
                 }
                 break;
             case 39: // right key pressed break;
                 if (playerFish.x <= canvas.width - (100 * playerFish.scale / 2)) {
-                    playerFish.x += 15;
+                    playerFish.dx = 15;
                 }
                 break;
             case 40: // down key pressed break;
                 if (playerFish.y <= canvas.height - (30 * playerFish.scale / 2)) {
-                    playerFish.y += 15;
+                    playerFish.dy = 15;
                 }
                 break;
         }
     }
 
+    function moveNothing(e: KeyboardEvent): void {
 
-
+        switch (e.keyCode) {
+            case 37: // left key pressed break; 
+                if (playerFish.x >= 0 + (100 * playerFish.scale / 2)) {
+                    playerFish.dx = 0;
+                }
+                break;
+            case 38: // up key pressed break;
+                if (playerFish.y >= 0 + (30 * playerFish.scale / 2)) {
+                    playerFish.dy = 0;
+                }
+                break;
+            case 39: // right key pressed break;
+                if (playerFish.x <= canvas.width - (100 * playerFish.scale / 2)) {
+                    playerFish.dx = 0;
+                }
+                break;
+            case 40: // down key pressed break;
+                if (playerFish.y <= canvas.height - (30 * playerFish.scale / 2)) {
+                    playerFish.dy = 0;
+                }
+                break;
+        }
+    }
 }
-
-
-
-
-/*for (let i: number = 0; i < 100; i++) {
-         let x: number = Math.random() * canvas.width;
-         let y: number = ((Math.random() * 160) + 560);
-         sand(x, y);
-     } */

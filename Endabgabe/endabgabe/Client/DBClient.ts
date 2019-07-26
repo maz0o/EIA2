@@ -12,6 +12,7 @@ namespace endabgabe {
     export function refresh(): void {
         let query: string = "command=refresh";
         sendRequest(query, handleFindResponse);
+        console.log("Test");
     }
 
     function sendRequest(_query: string, _callback: EventListener): void { /* Sendet die Anfrage mit dem command refresh */
@@ -43,14 +44,28 @@ namespace endabgabe {
             console.log(responseAsJson); */
             let scoresPlayerArray: PlayerData[] = JSON.parse(xhr.response);
 
+            for (let i: number = 0; i < scoresPlayerArray.length; i++  ) {
+                scoresPlayerArray.sort(bestScores);
+            }
+
             document.getElementById("scoreList").innerHTML = " ";
 
-            for (let i: number = scoresPlayerArray.length - 3; i < scoresPlayerArray.length; i++) {
+            for (let i: number = scoresPlayerArray.length - 5; i < scoresPlayerArray.length; i++) {
                 let scoreNew: HTMLElement = document.createElement("div");
                 document.getElementById("scoreList").appendChild(scoreNew);
                 scoreNew.innerHTML = `${scoresPlayerArray[i].name} : ${scoresPlayerArray[i].score}`;
             }
-
         }
     }
+
+    function bestScores(_1: PlayerData, _2:PlayerData): number {
+        if (_1.score > _2.score) {
+            return -1;
+        }
+        if (_1.score < _2.score) {
+            return 1;
+        }
+        return 0;
+    }
+
 }

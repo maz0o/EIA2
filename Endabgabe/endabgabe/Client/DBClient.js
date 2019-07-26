@@ -12,6 +12,7 @@ var endabgabe;
     function refresh() {
         let query = "command=refresh";
         sendRequest(query, handleFindResponse);
+        console.log("Test");
     }
     endabgabe.refresh = refresh;
     function sendRequest(_query, _callback) {
@@ -39,13 +40,25 @@ var endabgabe;
              let responseAsJson: JSON = JSON.parse(xhr.response);
              console.log(responseAsJson); */
             let scoresPlayerArray = JSON.parse(xhr.response);
+            for (let i = 0; i < scoresPlayerArray.length; i++) {
+                scoresPlayerArray.sort(bestScores);
+            }
             document.getElementById("scoreList").innerHTML = " ";
-            for (let i = scoresPlayerArray.length - 3; i < scoresPlayerArray.length; i++) {
+            for (let i = scoresPlayerArray.length - 5; i < scoresPlayerArray.length; i++) {
                 let scoreNew = document.createElement("div");
                 document.getElementById("scoreList").appendChild(scoreNew);
                 scoreNew.innerHTML = `${scoresPlayerArray[i].name} : ${scoresPlayerArray[i].score}`;
             }
         }
+    }
+    function bestScores(_1, _2) {
+        if (_1.score > _2.score) {
+            return -1;
+        }
+        if (_1.score < _2.score) {
+            return 1;
+        }
+        return 0;
     }
 })(endabgabe || (endabgabe = {}));
 //# sourceMappingURL=DBClient.js.map

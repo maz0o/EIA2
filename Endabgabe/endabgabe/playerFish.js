@@ -1,9 +1,11 @@
 var endabgabe;
 (function (endabgabe) {
     class PlayerFish extends endabgabe.WholesomeOcean {
-        constructor(_x, _y, _color) {
+        constructor(_x, _y, _dx, _dy, _color) {
             super(_x, _y, _color);
             this.scale = 1;
+            this.dx = _dx;
+            this.dy = _dy;
         }
         draw() {
             let playerFish = new Path2D();
@@ -37,7 +39,52 @@ var endabgabe;
             }
         }
         update() {
+            this.move();
             this.draw();
+        }
+        move() {
+            /* if (!(this.x >= 0 + (100 * this.scale / 2))) {
+                if (this.dx < 0) this.y += this.dy;
+                if (this.dx > 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+                
+            } else if (!(this.x <= canvas.width - (100 * this.scale / 2))) {
+                if (this.dx > 0) this.y += this.dy;
+                if (this.dx < 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+            } else if (!(this.y >= 0 + (30 * this.scale / 2))) {
+                if (this.dy < 0) this.x += this.dx;
+                if (this.dy > 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+                
+
+
+            } else if (!(this.y <= canvas.height - (30 * this.scale / 2))) {
+                if (this.dy > 0) this.x += this.dx;
+                if (this.dy < 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+
+            } else {
+                console.log("Hier war ich bei move()");
+                this.x += this.dx;
+                this.y += this.dy;
+            } */
+            this.x += this.dx;
+            this.y += this.dy;
+            if (!(this.x >= 0 + (100 * this.scale / 2)) || !(this.x <= endabgabe.canvas.width - (100 * this.scale / 2))) {
+                this.x -= this.dx;
+            }
+            if (!(this.y >= 0 + (30 * this.scale / 2)) || !(this.y <= endabgabe.canvas.height - (30 * this.scale / 2))) {
+                this.y -= this.dy;
+            }
         }
     }
     endabgabe.PlayerFish = PlayerFish;

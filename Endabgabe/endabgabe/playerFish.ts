@@ -2,9 +2,13 @@ namespace endabgabe {
     export class PlayerFish extends WholesomeOcean {
         scale: number = 1;
         hitbox: Path2D;
+        dx: number;
+        dy: number;
 
-        constructor(_x: number, _y: number, _color: string) {
+        constructor(_x: number, _y: number, _dx: number, _dy: number, _color: string) {
             super(_x, _y, _color);
+            this.dx = _dx;
+            this.dy = _dy;
         }
 
         public draw(): void {
@@ -47,8 +51,57 @@ namespace endabgabe {
 
         }
         update(): void {
-
+            this.move();
             this.draw();
+        }
+
+        move(): void {
+
+            /* if (!(this.x >= 0 + (100 * this.scale / 2))) {
+                if (this.dx < 0) this.y += this.dy;
+                if (this.dx > 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+                
+            } else if (!(this.x <= canvas.width - (100 * this.scale / 2))) {
+                if (this.dx > 0) this.y += this.dy;
+                if (this.dx < 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+            } else if (!(this.y >= 0 + (30 * this.scale / 2))) {
+                if (this.dy < 0) this.x += this.dx;
+                if (this.dy > 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+                
+
+
+            } else if (!(this.y <= canvas.height - (30 * this.scale / 2))) {
+                if (this.dy > 0) this.x += this.dx;
+                if (this.dy < 0) {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                }
+
+            } else {
+                console.log("Hier war ich bei move()");
+                this.x += this.dx;
+                this.y += this.dy;
+            } */
+
+            
+            
+            this.x += this.dx;
+            this.y += this.dy;
+            if (!(this.x >= 0 + (100 * this.scale / 2)) || !(this.x <= canvas.width - (100 * this.scale / 2))) {
+                this.x -= this.dx;
+            }
+            if (!(this.y >= 0 + (30 * this.scale / 2)) || !(this.y <= canvas.height - (30 * this.scale / 2))) {
+                this.y -= this.dy;
+            }
         }
 
      /*eat(): void {

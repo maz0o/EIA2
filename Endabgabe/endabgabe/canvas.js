@@ -2,8 +2,10 @@ var endabgabe;
 (function (endabgabe) {
     document.addEventListener("DOMContentLoaded", init);
     window.addEventListener("keydown", moveSomething, false);
-    let wholesomeOcean = [];
+    window.addEventListener("keyup", moveNothing, false);
     endabgabe.serverAddress = "https://maz0o-eia2.herokuapp.com/";
+    endabgabe.score = 0;
+    let wholesomeOcean = [];
     let menu = true;
     let fps = 30;
     let speed = 1;
@@ -11,7 +13,7 @@ var endabgabe;
     let imageData;
     let imageData2;
     let playerFish;
-    endabgabe.score = 0;
+    let counter = 0;
     let playTime;
     let scoreUploadOpen = true;
     function handleClick(_event) {
@@ -37,6 +39,57 @@ var endabgabe;
         endabgabe.canvas = document.getElementById("canvas");
         endabgabe.crc = endabgabe.canvas.getContext("2d");
         endabgabe.canvas.removeEventListener("click", handleClick);
+        endabgabe.refresh();
+        /* console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWMMMWWNX0Okkkkk0NWMWMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWNX0kxdooloodddlckNWWMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNX0kxdollodxkkkkkOkockWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWNX0kollcloddxxxxxxxxxxdcl0WWMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMWWMMWWNX00OkxxxdddlcccclllloooooooooooolcxNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMWNK0kxdolcccccccccccllccccccccccclllllllccOWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMWNKOxolccccclllccllllccclllccccccccccccccccccoKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMWXOxolccllccccllllllcclcllllllcllllllccllllccccco0WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMWX0xlccllllllllllllllllllllllllllllllllllllllllllllclxKNWMMMMMMMMMMMMMMMMMMMMMMWWWMMM" + "\n" +
+        "MMMMMMMMMMWWMWKkocclllllllllllllllllllllllllllllllllllllllllllllllllcld0NMMMMMMMMMMMMMMMMMMMMWWX0NMM" + "\n" +
+        "MMMMMMMMMMWNKxlclloooooolcclolooooooooooooooooooooooooooooooooooooooolclxKWMMMMMMMMMMMMMMMMMWXOldXMM" + "\n" +
+        "MMMMMMMMWN0xlcloooooooooolccloooooooooooooooooooooooooooooooooooooooooolclkXWWMMMMMMMMMMMWWNOocckWMM" + "\n" +
+        "MMMMMMMWXkllloodxOOOOxdoddolclooooooooooooooooooooooooooooooooooooooooooolcdKWWWMMMMMMMMWN0dcccl0MMM" + "\n" +
+        "MMMMWWW0ocooodkKNXOOXNKkdodoccodddddddddddddddddddddddddddddddddddddddddddoclONMMMMWWMWXOdllolcxNMMM" + "\n" +
+        "MMMMWNkllodddxKWk'  'kWKxdddlcldddddddddddddddddddddddddddddddddddddddddddddlcd0NWNNK0xolloddll0MMMM" + "\n" +
+        "MMMWXxclddxxdxXWx.  .xWXkdxdolcoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdddddddxxdddolloddollloddxdocdXMMMM" + "\n" +
+        "MMWKdcodxxxxxxOXN0xx0NXOxxxxxlcoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdddddddxxxxxdlckWMMMM" + "\n" +
+        "MMXdcldxxxxxxxxkO0KKKOkxxxxxxocoxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxkdll0MMMMM" + "\n" +
+        "MMN0xollloddxkkkkkkkkkkkkkkOkoldkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkOxcoKMMMMM" + "\n" +
+        "MMMMWNX0OkdlcdO0OO0000OOOO00OdoxO0000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO0OOOO00OOO0xloKMMMMM" + "\n" +
+        "MMMMMWNK0kdlok0K0000000KKKKKOddOKKKKKKKK0000000000000000000000000KKKKKKKK000K0OOkkO00KKKK0KkllKMMMMM" + "\n" +
+        "MMMMW0olodkOKKKXXXXXXXXXKKXKkdkKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXKKKKKKKKXK0kooooooodOKXXXK0ol0WMMMM" + "\n" +
+        "MMMWWOllkKNXXXXXXXXXXXXNXXNKxkKNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXKkolx0XNNXOdloOKXNKdckWMMMM" + "\n" +
+        "MMMMMWKdld0NNNNNNNNWNNNNNWXOOXNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNWNNNNNKxldKWWWWWWWN0xlokXNkcdXMMMM" + "\n" +
+        "MMMMMMMNOolx0NWWWWWWWWWWWN00NWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWNOolkNMWMMMMMMMMWKxlo00ol0MMMM" + "\n" +
+        "MMMMMMMMWXOdldOXWWWWWMMMWXXWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWNKxld0WMMMMMMMMMMMMMWKxlolcxNMMM" + "\n" +
+        "MMMMMMMMWWWN0xoox0XWWMMMMWWMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWXOdloONMMMMMMMMMMMMMMMMWWKxlcoKMMM" + "\n" +
+        "MMMMMMMMMMMMMWN0xoodkKXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNKOxocccxNMMMMMMMMMMMMMMMMMMMMWXkxKMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMWNKkdoodkOKXNWMWMMMMMMMMMMMMMMMMMMWWMMWWNX0Okxolloooocl0MMMMMMMMMMMMMMMMMMMMMMMWMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMWMWNKOkdooodxkO00KKXXXXXXXXXXK0OOOkxxdolllodxkkOOOOdcdXMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMWWWWNK0OkkxddollllloollllcldxxxkOkdolloxkOO0KKXKdckWMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWN0dlclodddolcxNWWMMMWWNKOkxdoooddddocxNMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNKkolodxxlcOWMMMMMMMMMMMWWNXK00OO0KNWMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWX0kdooldXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWMWNXXKXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" + "\n" +
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"); */
         drawBackground();
         imageData = endabgabe.crc.getImageData(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
         imageData2 = imageData;
@@ -53,7 +106,7 @@ var endabgabe;
             let x = endabgabe.canvas.width / 4;
             let y = endabgabe.canvas.height / 2;
             let dx = 0;
-            playerFish = new endabgabe.PlayerFish(x, y, "#FFDC00");
+            playerFish = new endabgabe.PlayerFish(x, y, 0, 0, "#FFDC00");
             playerFish.draw();
             document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
             endabgabe.refresh();
@@ -105,7 +158,6 @@ var endabgabe;
                 update();
         }
     }
-    let counter = 0;
     function update() {
         if (!menu) {
             endabgabe.crc.clearRect(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
@@ -189,8 +241,9 @@ var endabgabe;
                                 let dx = Math.random() * 3 + 6;
                                 let fish3 = new endabgabe.Fish3(x, y, speed * dx, "#65ff00", size);
                                 wholesomeOcean.push(fish3);
+                                endabgabe.score -= 50;
+                                document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
                             }
-                            endabgabe.score -= 50;
                         }
                         else if (currentObject instanceof endabgabe.Fish2) {
                             myalert();
@@ -204,12 +257,9 @@ var endabgabe;
             }
         }
         if (!menu)
-            playerFish.draw();
+            playerFish.update();
         playTime = window.setTimeout(update, 1000 / fps);
     }
-    /* if this.x < canvas.width {
-        this.x = -20._x
-    } */
     function drawBackground() {
         let sand = new Path2D();
         sand.moveTo(0, 560);
@@ -360,41 +410,53 @@ var endabgabe;
         endabgabe.crc.fillStyle = "rgba(57, 204, 204, 0.4)";
         endabgabe.crc.fill(plant6);
     }
-    function sand(_x, _y) {
-        let sand = new Path2D();
-        sand.rect(_x, _y, 7, 7);
-        endabgabe.crc.fillStyle = "#DDDDDD";
-        endabgabe.crc.fill(sand);
-        endabgabe.crc.stroke(sand);
-    }
     function moveSomething(e) {
         switch (e.keyCode) {
             case 37: // left key pressed break; 
                 if (playerFish.x >= 0 + (100 * playerFish.scale / 2)) {
-                    playerFish.x -= 15;
+                    playerFish.dx = -15;
                 }
                 break;
             case 38: // up key pressed break;
                 if (playerFish.y >= 0 + (30 * playerFish.scale / 2)) {
-                    playerFish.y -= 15;
+                    playerFish.dy = -15;
                 }
                 break;
             case 39: // right key pressed break;
                 if (playerFish.x <= endabgabe.canvas.width - (100 * playerFish.scale / 2)) {
-                    playerFish.x += 15;
+                    playerFish.dx = 15;
                 }
                 break;
             case 40: // down key pressed break;
                 if (playerFish.y <= endabgabe.canvas.height - (30 * playerFish.scale / 2)) {
-                    playerFish.y += 15;
+                    playerFish.dy = 15;
+                }
+                break;
+        }
+    }
+    function moveNothing(e) {
+        switch (e.keyCode) {
+            case 37: // left key pressed break; 
+                if (playerFish.x >= 0 + (100 * playerFish.scale / 2)) {
+                    playerFish.dx = 0;
+                }
+                break;
+            case 38: // up key pressed break;
+                if (playerFish.y >= 0 + (30 * playerFish.scale / 2)) {
+                    playerFish.dy = 0;
+                }
+                break;
+            case 39: // right key pressed break;
+                if (playerFish.x <= endabgabe.canvas.width - (100 * playerFish.scale / 2)) {
+                    playerFish.dx = 0;
+                }
+                break;
+            case 40: // down key pressed break;
+                if (playerFish.y <= endabgabe.canvas.height - (30 * playerFish.scale / 2)) {
+                    playerFish.dy = 0;
                 }
                 break;
         }
     }
 })(endabgabe || (endabgabe = {}));
-/*for (let i: number = 0; i < 100; i++) {
-         let x: number = Math.random() * canvas.width;
-         let y: number = ((Math.random() * 160) + 560);
-         sand(x, y);
-     } */
 //# sourceMappingURL=canvas.js.map

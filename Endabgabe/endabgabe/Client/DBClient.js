@@ -52,11 +52,11 @@ var endabgabe;
         }
     }
     function bestScores(_1, _2) {
-        if (_1.score > _2.score) {
-            return -1;
-        }
         if (_1.score < _2.score) {
             return 1;
+        }
+        if (_1.score > _2.score) {
+            return -1;
         }
         return 0;
     }

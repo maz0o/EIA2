@@ -59,11 +59,11 @@ namespace endabgabe {
     }
 
     function bestScores(_1: PlayerData, _2:PlayerData): number {
-        if (_1.score > _2.score) {
-            return -1;
-        }
         if (_1.score < _2.score) {
             return 1;
+        }
+        if (_1.score > _2.score) {
+            return -1;
         }
         return 0;
     }

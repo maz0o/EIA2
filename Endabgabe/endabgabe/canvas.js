@@ -4,7 +4,10 @@ var endabgabe;
     window.addEventListener("keydown", moveSomething, false);
     let wholesomeOcean = [];
     endabgabe.serverAddress = "https://maz0o-eia2.herokuapp.com/";
+    let menu = true;
     let fps = 30;
+    let speed = 1;
+    let firstGame = true;
     let imageData;
     let imageData2;
     let playerFish;
@@ -12,78 +15,104 @@ var endabgabe;
     let playTime;
     let scoreUploadOpen = true;
     function handleClick(_event) {
-        let x = _event.clientX;
-        let y = _event.clientY;
+        // canvas.getBoundingClientRect().left
+        let x = _event.clientX - endabgabe.canvas.getBoundingClientRect().left;
+        let y = _event.clientY - endabgabe.canvas.getBoundingClientRect().top;
         console.log("x:" + x + "y:" + y);
-        if (x >= 50 && x <= 160 && y >= 150 && y <= 180)
-            window.location.assign("file:///C:/Users/marco/Documents/Studium/Semester_2/EIA2/config/EIA2/Endabgabe/endabgabe/index.html");
-        if (x >= 60 && x <= 345 && y >= 245 && y <= 285) {
+        if (x >= 30 && x <= 140 && y >= 70 && y <= 110) {
+            //window.location.assign("file:///C:/Users/marco/Documents/Studium/Semester_2/EIA2/config/EIA2/Endabgabe/endabgabe/index.html");
+            menu = false;
+            init();
+        }
+        if (x >= 30 && x <= 325 && y >= 165 && y <= 215) {
             endabgabe.crc.font = "20px Comic Sans MS";
             endabgabe.crc.fillText("bla bla", 460, 100);
             endabgabe.crc.fillText("bla bla", 460, 170);
         }
     }
     function init() {
+        if (!firstGame)
+            endabgabe.crc.clearRect(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
+        console.log("mir mache n init: " + menu);
         endabgabe.canvas = document.getElementById("canvas");
         endabgabe.crc = endabgabe.canvas.getContext("2d");
-        endabgabe.canvas.addEventListener("click", handleClick);
+        endabgabe.canvas.removeEventListener("click", handleClick);
         drawBackground();
         imageData = endabgabe.crc.getImageData(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
         imageData2 = imageData;
-        endabgabe.crc.font = "40px Comic Sans MS";
-        endabgabe.crc.fillText("PLAY", 30, 100);
-        endabgabe.crc.font = "40px Comic Sans MS";
-        endabgabe.crc.fillText("HOW TO PLAY", 30, 200);
-        endabgabe.crc.font = "40px Comic Sans MS";
-        endabgabe.crc.fillText("HIGHSCORE", 30, 300);
-        let x = endabgabe.canvas.width / 2;
-        let y = endabgabe.canvas.height / 2;
-        let dx = 0;
-        playerFish = new endabgabe.PlayerFish(x, y, "#FFDC00");
-        playerFish.draw();
-        for (let i = 0; i < 5; i++) {
-            let size = 2;
-            let x = Math.random() * endabgabe.canvas.width;
-            let y = Math.random() * endabgabe.canvas.height;
-            let dx = Math.random() * 3 + 6;
-            let fish2 = new endabgabe.Fish2(x, y, dx, "#FFDC00", size);
-            wholesomeOcean.push(fish2);
-            fish2.draw();
+        if (menu) {
+            endabgabe.canvas.addEventListener("click", handleClick);
+            endabgabe.crc.font = "40px Comic Sans MS";
+            endabgabe.crc.fillText("PLAY", 30, 100);
+            endabgabe.crc.font = "40px Comic Sans MS";
+            endabgabe.crc.fillText("HOW TO PLAY", 30, 200);
+            endabgabe.crc.font = "40px Comic Sans MS";
+            endabgabe.crc.fillText("HIGHSCORE", 30, 300);
         }
-        for (let i = 0; i < 20; i++) {
-            let x = Math.random() * endabgabe.canvas.width;
-            let y = ((Math.random() * 360) + 0);
-            let dy = Math.random() * 5 + 2;
-            let bubbleBig = new endabgabe.BubbleBig(x, y, dy, "DeepSkyBlue");
-            wholesomeOcean.push(bubbleBig);
-            bubbleBig.draw();
+        else {
+            let x = endabgabe.canvas.width / 4;
+            let y = endabgabe.canvas.height / 2;
+            let dx = 0;
+            playerFish = new endabgabe.PlayerFish(x, y, "#FFDC00");
+            playerFish.draw();
+            document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
+            endabgabe.refresh();
+            for (let i = 0; i < 15; i++) {
+                let size = 0.4;
+                let x = (endabgabe.canvas.width / 3) * 2 + Math.random() * endabgabe.canvas.width;
+                let y = Math.random() * endabgabe.canvas.height;
+                let dx = -(Math.random() * 5 + 5);
+                let fish = new endabgabe.Fish(x, y, dx, "#FF4136", size);
+                wholesomeOcean.push(fish);
+                fish.draw();
+            }
+            for (let i = 0; i < 5; i++) {
+                let size = 2;
+                let x = (endabgabe.canvas.width / 3) * 2 + Math.random() * endabgabe.canvas.width;
+                let y = Math.random() * endabgabe.canvas.height;
+                let dx = Math.random() * 3 + 6;
+                let fish2 = new endabgabe.Fish2(x, y, dx, "#FFDC00", size);
+                wholesomeOcean.push(fish2);
+                fish2.draw();
+            }
+            for (let i = 0; i < 10; i++) {
+                let size = 5000;
+                let x = endabgabe.canvas.width + Math.random() * endabgabe.canvas.width;
+                let y = Math.random() * endabgabe.canvas.height;
+                let dx = Math.random() * 3 + 6;
+                let fish3 = new endabgabe.Fish3(x, y, dx, "#65ff00", size);
+                wholesomeOcean.push(fish3);
+                fish3.draw();
+            }
+            for (let i = 0; i < 20; i++) {
+                let x = Math.random() * endabgabe.canvas.width;
+                let y = ((Math.random() * 360) + 0);
+                let dy = Math.random() * 5 + 2;
+                let bubbleBig = new endabgabe.BubbleBig(x, y, dy, "DeepSkyBlue");
+                wholesomeOcean.push(bubbleBig);
+                bubbleBig.draw();
+            }
+            for (let i = 0; i < 20; i++) {
+                let x = Math.random() * endabgabe.canvas.width;
+                let y = ((Math.random() * 360) + 360);
+                let dy = Math.random() * 3 + 2;
+                let bubbleSmall = new endabgabe.BubbleSmall(x, y, dy, "DeepSkyBlue");
+                wholesomeOcean.push(bubbleSmall);
+                bubbleSmall.draw();
+            }
+            console.log(wholesomeOcean);
+            if (firstGame)
+                update();
         }
-        for (let i = 0; i < 20; i++) {
-            let x = Math.random() * endabgabe.canvas.width;
-            let y = ((Math.random() * 360) + 360);
-            let dy = Math.random() * 3 + 2;
-            let bubbleSmall = new endabgabe.BubbleSmall(x, y, dy, "DeepSkyBlue");
-            wholesomeOcean.push(bubbleSmall);
-            bubbleSmall.draw();
-        }
-        console.log(wholesomeOcean);
-        for (let i = 0; i < 15; i++) {
-            let size = 0.4;
-            let x = Math.random() * endabgabe.canvas.width;
-            let y = Math.random() * endabgabe.canvas.height;
-            let dx = -(Math.random() * 5 + 5);
-            let fish = new endabgabe.Fish(x, y, dx, "#FF4136", size);
-            wholesomeOcean.push(fish);
-            fish.draw();
-        }
-        update();
     }
     let counter = 0;
     function update() {
-        endabgabe.crc.clearRect(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
-        endabgabe.crc.putImageData(imageData, counter, 0);
-        endabgabe.crc.putImageData(imageData2, counter + endabgabe.canvas.width, 0);
-        counter -= 10;
+        if (!menu) {
+            endabgabe.crc.clearRect(0, 0, endabgabe.canvas.width, endabgabe.canvas.height);
+            endabgabe.crc.putImageData(imageData, counter, 0);
+            endabgabe.crc.putImageData(imageData2, counter + endabgabe.canvas.width, 0);
+            counter -= 10;
+        }
         if (counter < -endabgabe.canvas.width) {
             let temp;
             temp = imageData;
@@ -93,10 +122,17 @@ var endabgabe;
         }
         function myalert() {
             endabgabe.playerName = prompt("Game Over score:" + endabgabe.score, "Who are you?");
-            window.clearTimeout(playTime);
+            //window.clearTimeout(playTime);
             endabgabe.insert();
             endabgabe.refresh();
+            endabgabe.score = 0;
+            speed = 1;
+            console.log(speed);
+            wholesomeOcean.splice(0, wholesomeOcean.length);
             scoreUploadOpen = false;
+            firstGame = false;
+            menu = true;
+            init();
         }
         for (let i = 0; i < wholesomeOcean.length; i++) {
             let currentObject = wholesomeOcean[i];
@@ -104,7 +140,7 @@ var endabgabe;
         }
         for (let i = 0; i < wholesomeOcean.length; i++) {
             let currentObject = wholesomeOcean[i];
-            if (currentObject instanceof endabgabe.Fish || currentObject instanceof endabgabe.Fish2) {
+            if (currentObject instanceof endabgabe.Fish || currentObject instanceof endabgabe.Fish2 || currentObject instanceof endabgabe.Fish3) {
                 if (endabgabe.crc.isPointInPath(playerFish.hitbox, currentObject.headPositionX, currentObject.y)) {
                     console.log("hello");
                     if (playerFish.scale > currentObject.size) {
@@ -112,33 +148,63 @@ var endabgabe;
                         playerFish.scale += 0.1;
                         endabgabe.score += 5;
                         document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
-                        //erstelle neuen Fisch
-                        if (currentObject instanceof endabgabe.Fish) {
-                            let size = 0.4;
-                            let x = endabgabe.canvas.width + 100;
-                            let y = Math.random() * endabgabe.canvas.height;
-                            let dx = -(Math.random() * 5 + 5);
-                            let fish = new endabgabe.Fish(x, y, dx, "#FF4136", size);
-                            wholesomeOcean.push(fish);
+                        if (endabgabe.score >= 100 && speed == 0) {
+                            speed++;
                         }
-                        if (currentObject instanceof endabgabe.Fish2) {
-                            let size = 2;
-                            let x = endabgabe.canvas.width + 100;
-                            let y = Math.random() * endabgabe.canvas.height;
-                            let dx = Math.random() * 3 + 6;
-                            let fish2 = new endabgabe.Fish2(x, y, dx, "#FFDC00", size);
-                            wholesomeOcean.push(fish2);
+                        else if (endabgabe.score >= 200 && speed == 1) {
+                            speed++;
+                        }
+                        if (endabgabe.score < 1000) {
+                            //erstelle neuen Fisch
+                            if (currentObject instanceof endabgabe.Fish) {
+                                let size = 0.4;
+                                let x = endabgabe.canvas.width + 100;
+                                let y = Math.random() * endabgabe.canvas.height;
+                                let dx = -(Math.random() * 5 + 5);
+                                console.log("ja gib der Mudda: " + speed + ", " + dx);
+                                let fish = new endabgabe.Fish(x, y, speed * dx, "#FF4136", size);
+                                wholesomeOcean.push(fish);
+                            }
+                            if (currentObject instanceof endabgabe.Fish2) {
+                                let size = 2;
+                                let x = endabgabe.canvas.width + 100;
+                                let y = Math.random() * endabgabe.canvas.height;
+                                let dx = Math.random() * 3 + 6;
+                                let fish2 = new endabgabe.Fish2(x, y, speed * dx, "#FFDC00", size);
+                                wholesomeOcean.push(fish2);
+                            }
                         }
                     }
                     else {
-                        console.log("My size: " + playerFish.scale + ", His size: " + currentObject.size);
-                        if (scoreUploadOpen == true)
+                        if (currentObject instanceof endabgabe.Fish3) {
+                            wholesomeOcean.splice(i, 1);
+                            playerFish.scale -= playerFish.scale / 2;
+                            if (playerFish.scale <= 0.9) {
+                                myalert();
+                            }
+                            else {
+                                let size = 5000;
+                                let x = endabgabe.canvas.width + 100;
+                                let y = Math.random() * endabgabe.canvas.height;
+                                let dx = Math.random() * 3 + 6;
+                                let fish3 = new endabgabe.Fish3(x, y, speed * dx, "#65ff00", size);
+                                wholesomeOcean.push(fish3);
+                            }
+                            endabgabe.score -= 50;
+                        }
+                        else if (currentObject instanceof endabgabe.Fish2) {
                             myalert();
+                        }
+                        else if (scoreUploadOpen == true) {
+                            console.log("My size: " + playerFish.scale + ", His size: " + currentObject.size);
+                            myalert();
+                        }
                     }
                 }
             }
         }
-        playerFish.draw();
+        if (!menu)
+            playerFish.draw();
         playTime = window.setTimeout(update, 1000 / fps);
     }
     /* if this.x < canvas.width {
@@ -304,23 +370,23 @@ var endabgabe;
     function moveSomething(e) {
         switch (e.keyCode) {
             case 37: // left key pressed break; 
-                if (playerFish.x >= 100 * playerFish.scale) {
-                    playerFish.x -= 10;
+                if (playerFish.x >= 0 + (100 * playerFish.scale / 2)) {
+                    playerFish.x -= 15;
                 }
                 break;
             case 38: // up key pressed break;
-                if (playerFish.y >= 30 * playerFish.scale) {
-                    playerFish.y -= 10;
+                if (playerFish.y >= 0 + (30 * playerFish.scale / 2)) {
+                    playerFish.y -= 15;
                 }
                 break;
             case 39: // right key pressed break;
-                if (playerFish.x <= 720 * playerFish.scale) {
-                    playerFish.x += 10;
+                if (playerFish.x <= endabgabe.canvas.width - (100 * playerFish.scale / 2)) {
+                    playerFish.x += 15;
                 }
                 break;
             case 40: // down key pressed break;
-                if (playerFish.y <= 700 * playerFish.scale) {
-                    playerFish.y += 10;
+                if (playerFish.y <= endabgabe.canvas.height - (30 * playerFish.scale / 2)) {
+                    playerFish.y += 15;
                 }
                 break;
         }

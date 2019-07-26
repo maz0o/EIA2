@@ -41,7 +41,7 @@ namespace endabgabe {
                 hitBox.lineTo(this.x + 15 * this.scale, this.y + 15 * this.scale);
                 hitBox.lineTo(this.x + 35 * this.scale, this.y + 15 * this.scale);
                 hitBox.closePath();
-                crc.stroke(hitBox);
+                //crc.stroke(hitBox);
                 this.hitbox = hitBox;
             }
 

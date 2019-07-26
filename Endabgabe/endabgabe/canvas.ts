@@ -8,7 +8,10 @@ namespace endabgabe {
     export let serverAddress: string = "https://maz0o-eia2.herokuapp.com/";
 
 
+    let menu: boolean = true;
     let fps: number = 30;
+    let speed: number = 1;
+    let firstGame: boolean = true;
     let imageData: ImageData;
     let imageData2: ImageData;
     let playerFish: PlayerFish;
@@ -18,26 +21,31 @@ namespace endabgabe {
     let scoreUploadOpen: boolean = true;
 
     function handleClick(_event: MouseEvent): void {
-        let x: number = _event.clientX;
-        let y: number = _event.clientY;
+        // canvas.getBoundingClientRect().left
+        let x: number = _event.clientX - canvas.getBoundingClientRect().left;
+        let y: number = _event.clientY - canvas.getBoundingClientRect().top;
         console.log("x:" + x + "y:" + y);
 
-        if (x >= 50 && x <= 160 && y >= 150 && y <= 180)
-            window.location.assign("file:///C:/Users/marco/Documents/Studium/Semester_2/EIA2/config/EIA2/Endabgabe/endabgabe/index.html");
-
-        if (x >= 60 && x <= 345 && y >= 245 && y <= 285) {
+        if (x >= 30 && x <= 140 && y >= 70 && y <= 110) {
+            //window.location.assign("file:///C:/Users/marco/Documents/Studium/Semester_2/EIA2/config/EIA2/Endabgabe/endabgabe/index.html");
+            menu = false;
+            init();
+        }
+        if (x >= 30 && x <= 325 && y >= 165 && y <= 215) {
             crc.font = "20px Comic Sans MS";
             crc.fillText("bla bla", 460, 100);
             crc.fillText("bla bla", 460, 170);
         }
-        
-            
+
+
     }
 
     function init(): void {
+        if (!firstGame) crc.clearRect(0, 0, canvas.width, canvas.height);
+        console.log("mir mache n init: " + menu);
         canvas = <HTMLCanvasElement>document.getElementById("canvas");
         crc = canvas.getContext("2d");
-        canvas.addEventListener("click", handleClick);
+        canvas.removeEventListener("click", handleClick);
 
         drawBackground();
 
@@ -47,70 +55,92 @@ namespace endabgabe {
 
         imageData = crc.getImageData(0, 0, canvas.width, canvas.height);
         imageData2 = imageData;
+        if (menu) {
+            canvas.addEventListener("click", handleClick);
+            crc.font = "40px Comic Sans MS";
+            crc.fillText("PLAY", 30, 100);
 
-        crc.font = "40px Comic Sans MS";
-        crc.fillText("PLAY", 30, 100);
+            crc.font = "40px Comic Sans MS";
+            crc.fillText("HOW TO PLAY", 30, 200);
 
-        crc.font = "40px Comic Sans MS";
-        crc.fillText("HOW TO PLAY", 30, 200);
+            crc.font = "40px Comic Sans MS";
+            crc.fillText("HIGHSCORE", 30, 300);
+        } else {
 
-        crc.font = "40px Comic Sans MS";
-        crc.fillText("HIGHSCORE", 30, 300);
+            let x: number = canvas.width / 4;
+            let y: number = canvas.height / 2;
+            let dx: number = 0;
+            playerFish = new PlayerFish(x, y, "#FFDC00");
+            playerFish.draw();
 
-        let x: number = canvas.width / 2;
-        let y: number = canvas.height / 2;
-        let dx: number = 0;
-        playerFish = new PlayerFish(x, y, "#FFDC00");
-        playerFish.draw();
+            document.getElementById("highscore").innerHTML = "Highscore: " + score;
+
+            refresh();
+
+            for (let i: number = 0; i < 15; i++) {
+                let size: number = 0.4;
+                let x: number = (canvas.width / 3) * 2 + Math.random() * canvas.width;
+                let y: number = Math.random() * canvas.height;
+                let dx: number = -(Math.random() * 5 + 5);
+                let fish: Fish = new Fish(x, y, dx, "#FF4136", size);
+
+                wholesomeOcean.push(fish);
+                fish.draw();
+            }
 
 
 
-        for (let i: number = 0; i < 5; i++) {
-            let size: number = 2;
-            let x: number = Math.random() * canvas.width;
-            let y: number = Math.random() * canvas.height;
-            let dx: number = Math.random() * 3 + 6;
-            let fish2: Fish2 = new Fish2(x, y, dx, "#FFDC00", size);
+            for (let i: number = 0; i < 5; i++) {
+                let size: number = 2;
+                let x: number = (canvas.width / 3) * 2 + Math.random() * canvas.width;
+                let y: number = Math.random() * canvas.height;
+                let dx: number = Math.random() * 3 + 6;
+                let fish2: Fish2 = new Fish2(x, y, dx, "#FFDC00", size);
 
-            wholesomeOcean.push(fish2);
-            fish2.draw();
+                wholesomeOcean.push(fish2);
+                fish2.draw();
+            }
+
+            for (let i: number = 0; i < 10; i++) {
+                let size: number = 5000;
+                let x: number = canvas.width + Math.random() * canvas.width;
+                let y: number = Math.random() * canvas.height;
+                let dx: number = Math.random() * 3 + 6;
+                let fish3: Fish3 = new Fish3(x, y, dx, "#65ff00", size);
+
+                wholesomeOcean.push(fish3);
+                fish3.draw();
+            }
+
+
+
+
+            for (let i: number = 0; i < 20; i++) {
+                let x: number = Math.random() * canvas.width;
+                let y: number = ((Math.random() * 360) + 0);
+                let dy: number = Math.random() * 5 + 2;
+                let bubbleBig: BubbleBig = new BubbleBig(x, y, dy, "DeepSkyBlue");
+
+                wholesomeOcean.push(bubbleBig);
+                bubbleBig.draw();
+            }
+
+            for (let i: number = 0; i < 20; i++) {
+                let x: number = Math.random() * canvas.width;
+                let y: number = ((Math.random() * 360) + 360);
+                let dy: number = Math.random() * 3 + 2;
+                let bubbleSmall: BubbleSmall = new BubbleSmall(x, y, dy, "DeepSkyBlue");
+
+                wholesomeOcean.push(bubbleSmall);
+                bubbleSmall.draw();
+            }
+            console.log(wholesomeOcean);
+
+
+
+
+            if (firstGame) update();
         }
-
-        for (let i: number = 0; i < 20; i++) {
-            let x: number = Math.random() * canvas.width;
-            let y: number = ((Math.random() * 360) + 0);
-            let dy: number = Math.random() * 5 + 2;
-            let bubbleBig: BubbleBig = new BubbleBig(x, y, dy, "DeepSkyBlue");
-
-            wholesomeOcean.push(bubbleBig);
-            bubbleBig.draw();
-        }
-
-        for (let i: number = 0; i < 20; i++) {
-            let x: number = Math.random() * canvas.width;
-            let y: number = ((Math.random() * 360) + 360);
-            let dy: number = Math.random() * 3 + 2;
-            let bubbleSmall: BubbleSmall = new BubbleSmall(x, y, dy, "DeepSkyBlue");
-
-            wholesomeOcean.push(bubbleSmall);
-            bubbleSmall.draw();
-        }
-        console.log(wholesomeOcean);
-
-        for (let i: number = 0; i < 15; i++) {
-            let size: number = 0.4;
-            let x: number = Math.random() * canvas.width;
-            let y: number = Math.random() * canvas.height;
-            let dx: number = -(Math.random() * 5 + 5);
-            let fish: Fish = new Fish(x, y, dx, "#FF4136", size);
-
-            wholesomeOcean.push(fish);
-            fish.draw();
-        }
-
-
-
-        update();
     }
 
     let counter: number = 0;
@@ -118,11 +148,12 @@ namespace endabgabe {
 
 
     function update(): void {
-
-        crc.clearRect(0, 0, canvas.width, canvas.height);
-        crc.putImageData(imageData, counter, 0);
-        crc.putImageData(imageData2, counter + canvas.width, 0);
-        counter -= 10;
+        if (!menu) {
+            crc.clearRect(0, 0, canvas.width, canvas.height);
+            crc.putImageData(imageData, counter, 0);
+            crc.putImageData(imageData2, counter + canvas.width, 0);
+            counter -= 10;
+        }
 
         if (counter < -canvas.width) {
             let temp: ImageData;
@@ -135,10 +166,18 @@ namespace endabgabe {
         function myalert(): void {
 
             playerName = prompt("Game Over score:" + score, "Who are you?");
-            window.clearTimeout(playTime);
+            //window.clearTimeout(playTime);
             insert();
             refresh();
+            score = 0;
+            speed = 1;
+            console.log(speed);
+
+            wholesomeOcean.splice(0, wholesomeOcean.length);
             scoreUploadOpen = false;
+            firstGame = false;
+            menu = true;
+            init();
         }
 
 
@@ -149,7 +188,7 @@ namespace endabgabe {
 
         for (let i: number = 0; i < wholesomeOcean.length; i++) {
             let currentObject: WholesomeOcean = wholesomeOcean[i];
-            if (currentObject instanceof Fish || currentObject instanceof Fish2) {
+            if (currentObject instanceof Fish || currentObject instanceof Fish2 || currentObject instanceof Fish3) {
                 if (crc.isPointInPath(playerFish.hitbox, currentObject.headPositionX, currentObject.y)) {
                     console.log("hello");
                     if (playerFish.scale > currentObject.size) {
@@ -157,32 +196,61 @@ namespace endabgabe {
                         playerFish.scale += 0.1;
                         score += 5;
                         document.getElementById("highscore").innerHTML = "Highscore: " + score;
-
-                        //erstelle neuen Fisch
-                        if (currentObject instanceof Fish) {
-                            let size: number = 0.4;
-                            let x: number = canvas.width + 100;
-                            let y: number = Math.random() * canvas.height;
-                            let dx: number = -(Math.random() * 5 + 5);
-                            let fish: Fish = new Fish(x, y, dx, "#FF4136", size);
-
-                            wholesomeOcean.push(fish);
+                        if (score >= 100 && speed == 0) {
+                            speed++;
+                        } else if (score >= 200 && speed == 1) {
+                            speed++;
 
                         }
-                        if (currentObject instanceof Fish2) {
-                            let size: number = 2;
-                            let x: number = canvas.width + 100;
-                            let y: number = Math.random() * canvas.height;
-                            let dx: number = Math.random() * 3 + 6;
-                            let fish2: Fish2 = new Fish2(x, y, dx, "#FFDC00", size);
+                        if (score < 1000) {
+                            //erstelle neuen Fisch
+                            if (currentObject instanceof Fish) {
+                                let size: number = 0.4;
+                                let x: number = canvas.width + 100;
+                                let y: number = Math.random() * canvas.height;
+                                let dx: number = -(Math.random() * 5 + 5);
+                                console.log("ja gib der Mudda: " + speed + ", " + dx);
+                                let fish: Fish = new Fish(x, y, speed * dx, "#FF4136", size);
 
-                            wholesomeOcean.push(fish2);
+                                wholesomeOcean.push(fish);
+                            }
+                            if (currentObject instanceof Fish2) {
+                                let size: number = 2;
+                                let x: number = canvas.width + 100;
+                                let y: number = Math.random() * canvas.height;
+                                let dx: number = Math.random() * 3 + 6;
+                                let fish2: Fish2 = new Fish2(x, y, speed * dx, "#FFDC00", size);
+
+                                wholesomeOcean.push(fish2);
+                            }
                         }
-
                     } else {
-                        console.log("My size: " + playerFish.scale + ", His size: " + currentObject.size);
-                        if (scoreUploadOpen == true)
+                        if (currentObject instanceof Fish3) {
+                            wholesomeOcean.splice(i, 1);
+                            
+                            playerFish.scale -= playerFish.scale / 2;
+                            if (playerFish.scale <= 0.9) {
+                                myalert();
+                            } else {
+                                let size: number = 5000;
+                                let x: number = canvas.width + 100;
+                                let y: number = Math.random() * canvas.height;
+                                let dx: number = Math.random() * 3 + 6;
+                                let fish3: Fish3 = new Fish3(x, y, speed * dx, "#65ff00", size);
+                                
+                                wholesomeOcean.push(fish3);
+                            }
+                            
+                            score -= 50;
+
+
+                            
+                        } else if (currentObject instanceof Fish2) {
                             myalert();
+                        } else if (scoreUploadOpen == true) {
+                            console.log("My size: " + playerFish.scale + ", His size: " + currentObject.size);
+                            myalert();
+                        }
                     }
 
                 }
@@ -190,7 +258,7 @@ namespace endabgabe {
             }
 
         }
-        playerFish.draw();
+        if (!menu) playerFish.draw();
         playTime = window.setTimeout(update, 1000 / fps);
     }
 
@@ -394,23 +462,23 @@ namespace endabgabe {
 
         switch (e.keyCode) {
             case 37: // left key pressed break; 
-                if (playerFish.x >= 100 * playerFish.scale) {
-                    playerFish.x -= 10;
+                if (playerFish.x >= 0 + (100 * playerFish.scale / 2)) {
+                    playerFish.x -= 15;
                 }
                 break;
             case 38: // up key pressed break;
-                if (playerFish.y >= 30 * playerFish.scale) {
-                    playerFish.y -= 10;
+                if (playerFish.y >= 0 + (30 * playerFish.scale / 2)) {
+                    playerFish.y -= 15;
                 }
                 break;
             case 39: // right key pressed break;
-                if (playerFish.x <= 720 * playerFish.scale) {
-                    playerFish.x += 10;
+                if (playerFish.x <= canvas.width - (100 * playerFish.scale / 2)) {
+                    playerFish.x += 15;
                 }
                 break;
             case 40: // down key pressed break;
-                if (playerFish.y <= 700 * playerFish.scale) {
-                    playerFish.y += 10;
+                if (playerFish.y <= canvas.height - (30 * playerFish.scale / 2)) {
+                    playerFish.y += 15;
                 }
                 break;
         }

@@ -43,12 +43,13 @@ namespace endabgabe {
             console.log(responseAsJson); */
             let scoresPlayerArray: PlayerData[] = JSON.parse(xhr.response);
 
-            document.getElementById("scores").innerHTML = "";
+            document.getElementById("scoreList").innerHTML = " ";
 
-            for (let i: number = 0; i < 15; i++);
-            let scoreNew: HTMLElement = document.createElement("div");
-            document.getElementById("scores").appendChild(scoreNew);
-            scoreNew.innerHTML = `$ {scoresPlayerArray [i].name} : $ {scorePlayerArray [i].score}`;
+            for (let i: number = scoresPlayerArray.length - 3; i < scoresPlayerArray.length; i++) {
+                let scoreNew: HTMLElement = document.createElement("div");
+                document.getElementById("scoreList").appendChild(scoreNew);
+                scoreNew.innerHTML = `${scoresPlayerArray[i].name} : ${scoresPlayerArray[i].score}`;
+            }
 
         }
     }

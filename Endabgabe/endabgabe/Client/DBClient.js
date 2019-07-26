@@ -39,12 +39,12 @@ var endabgabe;
              let responseAsJson: JSON = JSON.parse(xhr.response);
              console.log(responseAsJson); */
             let scoresPlayerArray = JSON.parse(xhr.response);
-            document.getElementById("scores").innerHTML = "";
-            for (let i = 0; i < 15; i++)
-                ;
-            let scoreNew = document.createElement("div");
-            document.getElementById("scores").appendChild(scoreNew);
-            scoreNew.innerHTML = `$ {scoresPlayerArray [i].name} : $ {scorePlayerArray [i].score}`;
+            document.getElementById("scoreList").innerHTML = " ";
+            for (let i = scoresPlayerArray.length - 3; i < scoresPlayerArray.length; i++) {
+                let scoreNew = document.createElement("div");
+                document.getElementById("scoreList").appendChild(scoreNew);
+                scoreNew.innerHTML = `${scoresPlayerArray[i].name} : ${scoresPlayerArray[i].score}`;
+            }
         }
     }
 })(endabgabe || (endabgabe = {}));

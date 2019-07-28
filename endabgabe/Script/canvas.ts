@@ -19,6 +19,7 @@ namespace endabgabe {
     let counter: number = 0;
     let playTime: number;
     let scoreUploadOpen: boolean = true;
+    
 
     function myalert(): void {
 

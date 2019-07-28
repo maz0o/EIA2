@@ -43,8 +43,8 @@ var endabgabe;
             for (let i = 0; i < scoresPlayerArray.length; i++) {
                 scoresPlayerArray.sort(bestScores);
             }
-            document.getElementById("scoreList").innerHTML = " ";
-            for (let i = scoresPlayerArray.length - 5; i < scoresPlayerArray.length; i++) {
+            document.getElementById("scoreList").innerHTML = "";
+            for (let i = 0; i < 5; i++) {
                 let scoreNew = document.createElement("div");
                 document.getElementById("scoreList").appendChild(scoreNew);
                 scoreNew.innerHTML = `${scoresPlayerArray[i].name} : ${scoresPlayerArray[i].score}`;

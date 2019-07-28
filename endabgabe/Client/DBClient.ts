@@ -48,9 +48,9 @@ namespace endabgabe {
                 scoresPlayerArray.sort(bestScores);
             }
 
-            document.getElementById("scoreList").innerHTML = " ";
+            document.getElementById("scoreList").innerHTML = "";
 
-            for (let i: number = scoresPlayerArray.length - 5; i < scoresPlayerArray.length; i++) {
+            for (let i: number = 0; i < 5; i++) {
                 let scoreNew: HTMLElement = document.createElement("div");
                 document.getElementById("scoreList").appendChild(scoreNew);
                 scoreNew.innerHTML = `${scoresPlayerArray[i].name} : ${scoresPlayerArray[i].score}`;

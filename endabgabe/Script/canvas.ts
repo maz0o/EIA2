@@ -96,7 +96,7 @@ namespace endabgabe {
             playerFish = new PlayerFish(x, y, 0, 0, "#FFDC00");
             playerFish.draw();
 
-            document.getElementById("highscore").innerHTML = "Highscore: " + score;
+            document.getElementById("highscore").innerHTML = "your score: " + score;
 
             refresh();
 
@@ -205,7 +205,7 @@ namespace endabgabe {
                         wholesomeOcean.splice(i, 1);
                         playerFish.scale += 0.1;
                         score += 5;
-                        document.getElementById("highscore").innerHTML = "Highscore: " + score;
+                        document.getElementById("highscore").innerHTML = "your score: " + score;
                         if (score >= 100 && speed == 0) {
                             speed++;
                         } else if (score >= 200 && speed == 1) {
@@ -250,7 +250,7 @@ namespace endabgabe {
 
                                 wholesomeOcean.push(fish3);
                                 score -= 50;
-                                document.getElementById("highscore").innerHTML = "Highscore: " + score;
+                                document.getElementById("highscore").innerHTML = "your score: " + score;
                             }
 
 

@@ -77,7 +77,7 @@ var endabgabe;
             let dx = 0;
             playerFish = new endabgabe.PlayerFish(x, y, 0, 0, "#FFDC00");
             playerFish.draw();
-            document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
+            document.getElementById("highscore").innerHTML = "your score: " + endabgabe.score;
             endabgabe.refresh();
             for (let i = 0; i < 15; i++) {
                 let size = 0.4;
@@ -168,7 +168,7 @@ var endabgabe;
                         wholesomeOcean.splice(i, 1);
                         playerFish.scale += 0.1;
                         endabgabe.score += 5;
-                        document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
+                        document.getElementById("highscore").innerHTML = "your score: " + endabgabe.score;
                         if (endabgabe.score >= 100 && speed == 0) {
                             speed++;
                         }
@@ -211,7 +211,7 @@ var endabgabe;
                                 let fish3 = new endabgabe.Fish3(x, y, speed * dx, "#65ff00", size);
                                 wholesomeOcean.push(fish3);
                                 endabgabe.score -= 50;
-                                document.getElementById("highscore").innerHTML = "Highscore: " + endabgabe.score;
+                                document.getElementById("highscore").innerHTML = "your score: " + endabgabe.score;
                             }
                         }
                         else if (currentObject instanceof endabgabe.Fish2) {

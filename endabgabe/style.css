@@ -1,0 +1,51 @@
+html {
+background-color: aquamarine;
+}
+
+canvas {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    border-style: solid;
+}
+
+h1 {
+    text-align: center;
+    font-family: "Comic Sans MS";
+    color: #ff5d9e;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+#highscore {
+    color: #bf81ff;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Comic Sans MS';
+}
+
+#scoreList {
+    font-family: "Comic Sans MS";
+    position: fixed;
+    padding: 5px;
+    top: 90px;
+    left: 50px;
+    font-size: 25px;
+    color: #bf81ff;
+    background-color: #0074D9;
+    
+}
+
+
+
+
+
